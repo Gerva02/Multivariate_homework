@@ -8,18 +8,48 @@ date: "2025-03-26"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Esercizio 1 pt4
 ```{r}
+p = 3
+pi_0 = 1/4 # da quanto ho capito è uniforme la prob 
+N = 1000 
+n= 100
+
+M = matrix(NA, nrow= 1000,ncol=4 )
+for (i in 1:N){
+  # questo sampla un numero a caso da (1 a 4 )
+  Y_hot_i = matrix(NA, nrow=n , ncol=4) # questa è la 
+  Y_i = sample(4,n,replace =T)
+  for (j in (1:n)){
+  
+    Y_hot_i[j,] = as.numeric(1:4 %in% Y_i[j]) #questo crea i vettori 
+  }
+  
+  M[i,] = Y_hot_i %>%
+    colSums() # questo dovrebbe essere un unico vettore della multinomiale (massimo valore dovrebbe essere uguale a 100)
+}
+M  # in teoria questi sono tanti samples dalla multinomiale no ? 
+  
+
+
+
+```
+
+
+
+```{r, include=FALSE}
 library(GGally)
 library(tidyverse)
 ```
-
+The following dataset is called Boston and tries to introduce an hedonic model (i.e. a model that tries to explain the price of an asset by splitting it into different factors) and so studies the value of homes of 506 suburs from the Boston metropolitan area.
 
 ```{r}
 library(MASS)
 X<-tibble(Boston[,-c(2,4,9,14)])
+dim(X)
 ?Boston
 head(X)
-n= ncol(X)
+p= ncol(X)
 ```
 2.
 We will print all of the correlations 
@@ -28,43 +58,105 @@ we get the lower part of the matrix(it's symmetric) (exluding ones), we take the
 ```{r}
 S = cor(X)
 b = S[lower.tri(S)]%>% abs() %>% sort( decreasing = T) %>% .[1:4]
-indices <- (matrix( abs(S) %in% b , ncol=n ) & lower.tri(S)) %>% which( arr.ind = TRUE)
+indices <- (matrix( abs(S) %in% b , ncol=p ) & lower.tri(S)) %>% which( arr.ind = TRUE)
+#qua prendiamo gli indici delle correlazioni maggiori (dobbiamo sommare ad lower.tri(S)) perchè se no prendiamo il doppio degli indici
+
+# the pipe simbol simply means that you first do what is on the left of it and then put it in the argument of the right(i.e you pipe it in)
 
 result_table <- tibble(
   Var1 = rownames(S)[indices[, 1]],
-  Var2 = colnames(S)[indices[, 2]],
+  Var2 = rownames(S)[indices[, 2]],
   Correlation = S[indices]
 )
 
 print(result_table)
 ```
-The first intepretation is obvious areas that highly industrialized emit momre nitrogen oxides
-the second i dont know (why would proportion of owner-occupied units built prior to 1940.
+The first interpretation is obvious areas that are highly industrialized emit more nitrogen oxides
 
-and nitrogen corelate)
+the second older construction sites are less enviorementaly frendly ie emit more nitrogen (sketchy)
+
+
 the third is easy more rural areas have less pollution 
 
-the fourth is not clear to 
+the fourth simply states that older building are closer to the city center (sign is correct)
 
 
-extreme univariate outlier we try with box plots
+For extreme univariate outlier we try with box plots 
 
+```{r} 
+X %>% scale() %>% as_tibble() %>% # the function scale that normalisez the data doesn't output a tibble
+  pivot_longer(names_to = "vars", cols=everything() ) %>%
+  ggplot( aes(x=vars, y=value, colour = vars)) + 
+  geom_boxplot()+ #(qua l'amico di alice l'ha fatto senza scale per me è sbagliato)
+  labs(title = "Boxplots for Boston Data Columns",
+       x = "Variables",
+       y = "Standardized Values") 
+```
 ```{r}
-X%>% scale() %>% boxplot()
+X %>%   # the function scale that normalisez the data doesn't output a tibble
+  pivot_longer(names_to = "vars", cols=everything() ) %>%
+  ggplot( aes(x=vars, y=value, colour = vars)) + 
+  geom_boxplot()+ #(qua l'amico di alice l'ha fatto senza scale per me è sbagliato)
+  labs(title = "Boxplots for Boston Data Columns",
+       x = "Variables",
+       y = "Standardized Values") 
+```
+l'amico di alice l'ha fatto così (cioè non standardizzando) non so se ha senso (io penso proprio di no però bho )
+
+
+we see that colums with the most outliers are crim rm black, now let's see if they the most 
+```{r}
+X_id <- X %>% 
+  mutate(id = row_number())
+
+outliers_black <- X_id %>% 
+  dplyr::select(black,id) %>%
+  slice_max(order_by = black, n = 3)
+
+outliers_rm <- X_id %>% 
+  dplyr::select(rm,id) %>%
+  slice_max(order_by = rm, n = 3)
+
+outliers_crim <- X_id %>% 
+  dplyr::select(crim,id) %>%
+  slice_max(order_by = crim, n = 3)
+
+print(outliers_rm ) 
+print(outliers_crim)
+print(outliers_black )
+```
+onestamente non ho capito che osservazioni vuole bho
+```{r}
 
 ```
 
 
+
+
 ```{r}
-X %>%  
-  ggpairs(  lower = list(
-    continuous = function(data, mapping, ...) {
-      ggplot(data = data, mapping = mapping) +
-        geom_point() +
-        stat_ellipse()
-    })
-    ) 
+pca = X%>%
+  scale() %>%
+  princomp()
+plot(pca, type="l")
   
+``` 
+
+```{r}
+cumsum(pca$sdev ^2/p) < 0.8
 ```
+
+```{r}
+pca$sdev > 1
+```
+dal grafico e dal ultima sembrero volerci 3 componenti principali dall'altro metodo 3 
+
+
+6. 
+```{r}
+cor(pca$scores[,1:3], X) # are these the same of the loadings? no inve
+```
+
+
+
 
 
