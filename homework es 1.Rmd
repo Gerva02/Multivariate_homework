@@ -1,0 +1,474 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Punto 1
+$$
+i = 1 , \dots , n \quad Y_{i}\quad \text{be} \quad \in \{  1 , 2, \dots, p+1 \} 
+$$
+ with probability $\pi_{1},\dots,\pi _{p},\pi _{p +1 }>0\quad\sum_{j=1}^{p+1}\pi _{j}=1$.
+ The one-hot vector $Y_{i}=(Y_{i1},\dots,Y_{ip+1})$ such that $Y_{ij}=1\quad \text{when} \quad Y_{i}=j\implies \sum_{i=1}^{n}Y_{i}$ has multinomial distribution ie $\sum_{i=1}^{n}Y_{i}\sim \text{Multinomial}(n,\pi_{1},\dots,\pi _{p+1})$
+ 
+$$
+Y_{i}= \left\{\begin{matrix}1\quad \text{with probability }\pi _{1}  \\ 2\quad \text{with probability }\pi _{2} \\\dots
+\\ p+1 \quad\quad\dots\quad\quad \ \ \pi _{2}
+ \end{matrix}\right.
+$$
+$Y_{i}=(Y_{i1},\dots,Y_{i p+1})\to {1}\leq j \leq p+1\quad \text{and} \quad Y_{ij}=1$
+
+So $Y_{i}$ codified as one hot vectors is distributed as such $Y_{i}\sim \text{Multinomial}(1,\pi_{1},\dots,\pi _{p+1})$.
+
+By the CLT we can say 
+
+\begin{align}
+ & (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\text{diag}(\pi)-\pi \pi^{T}) \implies  \\
+ \Sigma= & \begin{pmatrix}
+\pi_{1} &  &  &     \\
+ & \pi_{2} &    &  \\
+ &  &  \ddots &   \\
+ &  &  &   \pi _{p+1}
+\end{pmatrix} - \begin{pmatrix}
+\pi_{1}  \\
+\vdots  \\
+\pi _{p+1}
+\end{pmatrix}\begin{pmatrix}
+\pi_{1}   & 
+\dots   & 
+\pi _{p+1}
+\end{pmatrix} \\
+ & \begin{pmatrix}
+\pi_{1} &  &  &     \\
+ & \pi_{2} &    &  \\
+ &  &  \ddots &   \\
+ &  &  &   \pi _{p+1}
+\end{pmatrix} - \begin{pmatrix}
+\pi_{1}^{2} & \pi_{1}\pi_{2}  &\dots  &   \pi_{1}\pi _{p+1} \\
+ \pi_{2}\pi_{1}& \pi_{2}^{2} & \dots  & \pi_{2}\pi _{p+1} \\
+ \vdots&  & \ddots &     \\
+ \pi _{p+1}\pi_{1}&  &  &  \pi^{2} _{p+1}
+\end{pmatrix}= \\
+\Sigma = &  \left(
+\begin{array}{ccc|c}
+\pi_{1}   (1-\pi _{1}) & -\pi_{1}\pi_{2} & \dots & -\pi_{1}\pi _{p+1} \\
+-\pi_{2}\pi_{1} & \pi_{2}(1-\pi_{2}) & \dots & -\pi_{2}\pi _{p+1} \\
+\vdots &  &  &  \\ \hline \\
+-\pi _{p+1}\pi _{1} & -\pi _{p+1}\pi _{2} & \dots  & \pi _{p+1}(1-\pi _{p+1})
+\end{array}
+\right)
+\end{align} 
+
+
+
+It's like $X_{1},\dots,X_{p}\sim \mathcal{N}_{p+1}(\underline{0}, \Sigma)$ so$X_{1},\dots ,X_{p}$ it's like the marginal of these component where $\underline{0}_{p}$ is the new vector of the mean with 0 component with dimension $p<p+1$ and
+$\Sigma _{p+1,p+1}=\underbrace{ \pi _{p+1} }_{ >0 }\underbrace{ (1-\pi _{p+1}) }_{ >0 (1) }>0$
+(1) $1-\pi _{p+1}>0 \Leftrightarrow \pi _{p+1}<1$  and this is true beacuse $\pi _{p+1}$
+is a probability so it is defined in (0,1)
+so the two condition are valid : 
+$$
+(X_{1},\dots,X_{p})\sim \mathcal{N}_{p}(\underline{0},\Sigma _{p\times p})
+$$
+
+where 
+$$
+\Sigma _{p\times p}=\left(
+\begin{array}{cccc}
+\pi_{1}   (1-\pi _{1}) & -\pi_{1}\pi_{2} & \dots & -\pi_{1}\pi _{p} \\
+-\pi_{2}\pi_{1} & \pi_{2}(1-\pi_{2}) & \dots & -\pi_{2}\pi _{p} \\
+\vdots &  & \ddots  &  \\ 
+-\pi _{p}\pi _{1} & -\pi _{p}\pi _{2} & \dots  & \pi _{p}(1-\pi _{p})
+\end{array}
+\right)
+$$
+
+## Punto 2
+We want to find the inverse of the covariance matrix:  
+$$  
+\Sigma = \begin{pmatrix}  
+ \pi_1^2&-\pi_1\pi_2&\dots&-\pi_1\pi_p\\  
+-\pi_2\pi_1&\pi_2^2&\dots&-\pi_2\pi_p\\  
+\vdots& \vdots&\ddots&\vdots\\  
+-\pi_p\pi_1&-\pi_p\pi_2 &\dots&\pi_p^2\\  
+\end{pmatrix}  
+$$ 
+First of all we need to check if the matrix is invertible, so we need to prove that $det(\Sigma) \neq 0$  
+Since evaluating the determinant is not quite easy, we find a Lemma that give us an equivalent condition for the invertibility: 
+  
+Sherman Morrison Formula: 
+Suppose $A\in \mathbb{R}^{n\times n}$ invertible and $u,v \in \mathbb{R}$ are column vectors. $A + uv^T$ is invertible $\iff 1+v^TAu\neq 0$.In this case: $(A+uv^T) = A^{-1} - \frac{A^{-1}uv^TA^{-1}}{1+v^TA^{-1}u} (2)$ . 
+  
+Application: we know that 
+$$ 
+\Sigma = diag(\pi_1,\dots,\pi_p) - \pi\pi^T =  
+A + uv^T  
+$$  
+where:
+- $A=\text{diag}(\pi_1,\dots,\pi_p)\in \mathbb{R}^{p\times p}$ 
+-  $u =\begin{pmatrix} -\pi_1\\ -\pi_2\\ \vdots \\ -\pi_p  \end{pmatrix}$
+- $v^{T} =\begin{pmatrix}\pi_{1} & \dots & \pi _{p}\end{pmatrix}$ 
+
+Remark : in our case there is a minus so to be coherent with the notation of the formula (2) we take the minus inside the vector $u$. 
+
+Is A invertible? 
+$$
+|A|= \left| \begin{pmatrix}
+\pi_{1}& & \\
+ &  & \ddots \\
+ &  &  & \pi _{p}
+\end{pmatrix}\right| = \pi_{1} \pi_{2}\dots \pi _{p} >0
+$$
+so it is invertible beacuse the determinant is bigger than 0 
+
+To apply the theorem we check that $1+ v^{T}A^{-1}u^{}\neq 0$
+Since A is a diagonal matrix we know that the inverse is as such: 
+$$
+A^{-1}=\begin{pmatrix}
+\frac{1}{\pi_{1}}  &  &  \\
+ & \ddots &  \\
+ &  & \frac{1}{\pi _{p}}
+\end{pmatrix}
+$$
+now we calculate :
+$$
+1+ v^{T}A^{-1}u^{} = 1 + \begin{pmatrix}
+\pi_{1} & \dots & \pi _{p}
+\end{pmatrix}\begin{pmatrix}
+\frac{1}{\pi_{1}}  &  &  \\
+ & \ddots &  \\
+ &  & \frac{1}{\pi _{p}}
+\end{pmatrix}\begin{pmatrix}
+-\pi_{1}   \\
+\vdots  \\
+ -\pi _{p} 
+\end{pmatrix} = 
+$$
+
+
+\begin{align}
+ & = 1 + \begin{pmatrix}
+1  &  1  & \dots & 1
+\end{pmatrix}\begin{pmatrix}
+-\pi_{1}   \\
+\vdots  \\
+ -\pi _{p} 
+\end{pmatrix} =  \\
+ & =1- (\pi _{1}+\dots+\pi _{p})\neq0 \Leftrightarrow \pi _{1}+\dots+\pi _{p}\neq 1
+\end{align}
+
+this is always true by hypothesis $\sum_{i=1}^{p+1}\pi _{i}=1$ and $\pi _{i}>0$ so $\sum_{i=1}^{p}\pi _{i}<1$ because  $\pi _{p+1}$ is missing
+The hypotesis of the theorem are verifed now we need to find 
+$$
+(A+uv^{T})^{-1} = A^{-1}- \frac{A^{-1}uv^{T}A^{-1}}{\underbrace{ 1+v^{t}A^{-1}u }_{ 1-(\pi _{1}+\dots +\pi _{p})=\pi _{p+1} }}
+$$
+
+The numerator of the fraction is the following
+
+\begin{align}
+ & \underset{ p\times p }{ \begin{pmatrix}
+\frac{1}{\pi_{1}}  &  &  \\
+ & \ddots &  \\
+ &  & \frac{1}{\pi _{p}}
+\end{pmatrix} }\underset{p\times 1  } { \begin{pmatrix}
+-\pi_{1}   \\
+\vdots  \\
+ -\pi _{p} 
+\end{pmatrix} }  \begin{pmatrix}
+\pi_{1} & \dots & \pi _{p}
+\end{pmatrix}\begin{pmatrix}
+\frac{1}{\pi_{1}}  &  &  \\
+ & \ddots &  \\
+ &  & \frac{1}{\pi _{p}}
+\end{pmatrix} =  \\
+ & \begin{pmatrix}
+-1  \\
+-1 \\
+\vdots\\
+-1
+\end{pmatrix}\begin{pmatrix}
+\pi_{1} & \dots & \pi _{p}
+\end{pmatrix}\begin{pmatrix}
+\frac{1}{\pi_{1}}  &  &  \\
+ & \ddots &  \\
+ &  & \frac{1}{\pi _{p}}
+\end{pmatrix} =  \\
+ & \begin{pmatrix}
+-\pi _{1} & \dots & -\pi _{p} \\  
+-\pi _{1} & \dots & -\pi _{p} \\ 
+\vdots &  &  \vdots\\ 
+-\pi _{1} & \dots & -\pi _{p} \\ 
+\end{pmatrix}\begin{pmatrix}
+\frac{1}{\pi_{1}}  &  &  \\
+ & \ddots &  \\
+ &  & \frac{1}{\pi _{p}}
+\end{pmatrix} = \underset{ p\times p }{\begin{pmatrix}
+-1  & \dots & -1  \\ 
+-1  & \dots & -1  \\
+\vdots& & \vdots \\
+-1 & \dots & -1
+\end{pmatrix}}
+\end{align}
+
+
+
+
+\begin{align}
+ & \Sigma^{-1} = A^{-1}-\begin{pmatrix}
+-\frac{1}{\pi _{p+1} }& \dots &- \frac{1}{\pi _{p+1} } \\
+\vdots &\ddots  & \vdots \\
+-\frac{1}{\pi _{p+1} }& \dots & -\frac{1}{\pi _{p+1} }
+\end{pmatrix}=  \\
+ & \begin{pmatrix}
+\frac{1}{\pi_{1}}  &  &  \\
+ & \ddots &  \\
+ &  & \frac{1}{\pi _{p}}
+\end{pmatrix} + \begin{pmatrix}
+\frac{1}{\pi _{p+1} }& \dots & \frac{1}{\pi _{p+1} } \\
+\vdots &\ddots  & \vdots \\
+\frac{1}{\pi _{p+1} }& \dots & \frac{1}{\pi _{p+1} }
+\end{pmatrix}= \\
+ & \begin{pmatrix}
+\frac{1}{\pi_{1}}+\frac{1}{\pi _{p+1}} & \frac{1}{\pi _{p+1}} & \dots & \frac{1}{\pi _{p+1}}\\
+\frac{1}{\pi _{p+1}} & \frac{1}{\pi_{2}}+\frac{1}{\pi _{p+1}} & \dots & \frac{1}{\pi _{p+1}}\\
+\vdots & \vdots &   & \vdots \\
+\frac{1}{\pi _{p+1}} & \frac{1}{\pi _{p+1}} & \dots & \frac{1}{\pi _{p}}+\frac{1}{\pi _{p+1}}
+\end{pmatrix}
+\end{align}
+
+
+## Punto 3
+
+
+## Punto 4
+
+```{r}
+p = 3
+pi_0 = 1/4 # da quanto ho capito è uniforme la prob 
+N = 1000 
+n= 100
+
+M = matrix(NA, nrow= n,ncol=4 )
+for (i in 1:n){
+  # questo sampla un numero a caso da (1 a 4 )
+  Y_hot_i = matrix(NA, nrow=N, ncol=4) # questa è la nx4 dove vanno inseriti i vettori già codificati
+  Y_i = sample(4,N,replace =T) #vettore non ancora codificato (contente tutte le 100 estrazioni)
+  for (j in (1:N)){
+   
+    Y_hot_i[j,] = as.numeric(1:4 %in% Y_i[j]) #questo crea i vettori one hot (li codifica) e li mette nella matrice
+  }
+   
+  M[i,] = Y_hot_i %>%
+    colSums() # questo dovrebbe essere un unico vettore della multinomiale (massimo valore dovrebbe essere uguale a 100)
+}
+M  # in teoria questi sono tanti samples dalla multinomiale no ? 
+```
+
+
+
+```{r}
+#prova v2
+norm_samplev2<- matrix(NA, nrow=N, ncol=4)
+for (i in (1:N)){
+      # questo sampla un numero a caso da (1 a 4 )
+  Y_hot_i = matrix(NA, nrow=n, ncol=4) # questa è la nx4 dove vanno inseriti i vettori già codificati
+  Y_i = sample(4,n,replace =T) #vettore non ancora codificato (contente tutte le 100 estrazioni)
+  for (j in (1:n)){
+     
+      Y_hot_i[j,] = as.numeric(1:4 %in% Y_i[j]) #questo crea i vettori one hot (li codifica) e li mette nella matrice
+    }
+  M = Y_hot_i %>%
+  colSums() # questo dovrebbe essere un unico vettore della multinomiale (massimo valore dovrebbe essere uguale a 100)
+  print(i)
+  norm_samplev2[i,]<-(M/n - pi_0)*sqrt(n)
+}
+
+
+mu = c(0,0)
+Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
+plot(norm_samplev2[,1],norm_samplev2[,2])
+lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5)
+```
+
+```{r}
+#prova v3
+norm_samplev3<- matrix(NA, nrow=N, ncol=4)
+for (i in (1:N)){
+  M<-rmultinom(1,size=100,prob=c(1/4,1/4,1/4,1/4))
+  norm_samplev3[i,]<-(M/n - pi_0)*sqrt(n)
+}
+mu = c(0,0)
+Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
+plot(norm_samplev3[,1],norm_samplev3[,2])
+lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5)
+
+```
+
+
+## Punto 5
+Given a vector a Gaussian random vector we know that conditioning on a Gaussian random variable the conditioned vector is still Gaussian with parameters : 
+$$
+\overline{\mu} = \mu_1 + \Sigma_{12}\Sigma_{22}^{-1}(a-\mu_2) 
+$$ 
+
+$$
+\overline{\Sigma}=\Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}  
+$$  
+ 
+We know that $(X_{1},X_{2},X_{3}) \sim \mathcal{N}_3(\underline{0}, \Sigma)$ where  
+
+$$
+\Sigma=  
+\begin{pmatrix}  
+ \frac{3}{16} & -\frac{1}{16} & -\frac{1}{16} \\  
+ -\frac{1}{16} & \frac{3}{16} & -\frac{1}{16} \\  
+ -\frac{1}{16} & -\frac{1}{16} & \frac{3}{16} 
+\end{pmatrix}  
+$$
+
+$$
+ \left(
+    \begin{array}{cc|c}
+ \frac{3}{16} & -\frac{1}{16} & -\frac{1}{16}\\  
+-\frac{1}{16} & \frac{3}{16} & -\frac{1}{16} \\ \hline   
+-\frac{1}{16} & -\frac{1}{16} & \frac{3}{16}   
+    \end{array}
+\right) =  
+\left(\begin{array}{c|cc}
+    \Large\Sigma _{11} & \begin{matrix} \Sigma_{12}  \\
+ & \end{matrix} \\ \hline  
+    \begin{matrix} \Sigma_{21} &  \end{matrix} & \Sigma _{22}
+\end{array}\right)
+$$
+
+
+We need to find the distribution of $(X_1,X_2)|X_3=x_3 \sim \mathcal{N}_2(\mu_{12|3}, \Sigma_{12|3})$ .
+
+So now we have to apply the formula above:  
+  
+
+\begin{align}
+ & \mu_{12|3} := \mu_{12} + \Sigma_{12}\Sigma_{22}^{-1}(x_3-\mu_3)= \\
+ &   
+\begin{pmatrix}
+\mu_{1} \\
+\mu_{2}
+\end{pmatrix}+\begin{pmatrix}
+-\frac{1}{16} \\
+-\frac{1}{16}
+\end{pmatrix} \frac{16}{3}  (x_{3}-\mu_{3})= \\
+ & \begin{pmatrix}
+0 \\
+0
+\end{pmatrix} + \begin{pmatrix}
+-\frac{1}{3} \\
+-\frac{1}{3}
+\end{pmatrix}x_{3} = \begin{pmatrix}
+-\frac{1}{3}x_{3} \\
+- \frac{1}{3}x_{3}
+\end{pmatrix}
+\end{align}
+
+
+
+\begin{align}
+ \Sigma _{12|3}   : & = \Sigma _{11}-\Sigma_{12}\Sigma _{22}^{-1}\Sigma _{21}  \\
+ & = \begin{pmatrix}
+\frac{3}{16} & -\frac{1}{16} \\
+-\frac{1}{16} & \frac{3}{16}
+\end{pmatrix} - \begin{pmatrix}
+-\frac{1}{16} \\
+-\frac{1}{16}
+\end{pmatrix} \frac{16}{3}\begin{pmatrix}
+-\frac{1}{16} & -\frac{1}{16}
+\end{pmatrix}  \\
+ & =\begin{pmatrix}
+\frac{3}{16} & -\frac{1}{16} \\
+-\frac{1}{16} & \frac{3}{16}
+\end{pmatrix} - \begin{pmatrix}
+\frac{1}{48} & \frac{1}{48} \\
+\frac{1}{48} &  \frac{1}{48}
+\end{pmatrix} \\
+ & = \begin{pmatrix}
+\frac{1}{6}  & -\frac{1}{12} \\
+-\frac{1}{12} & \frac{1}{6}
+\end{pmatrix}
+\end{align}
+
+$$
+(X_{1},X_{2})|X_{3}=x_{3} \sim \mathcal{N}_{2}\left( \begin{bmatrix}
+-\frac{1}{3}x_{3} \\
+- \frac{1}{3}x_{3}
+\end{bmatrix}, \begin{bmatrix}
+\frac{1}{6}  & -\frac{1}{12} \\
+-\frac{1}{12} & \frac{1}{6}
+\end{bmatrix}\right)
+$$
+We now that 
+
+$$
+X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}_{1} ( \mu_{3|12}, \Sigma _{3|12})
+$$
+
+now we define we get the mean vector is 
+
+\begin{align}
+\mu_{3|1,2}  & = \mu_{3}+\Sigma_{12}\Sigma _{11}^{-1}\begin{pmatrix}
+x_{1}-\mu_{1} \\
+x_{2}-\mu_{2}
+\end{pmatrix}  \\
+ & =0+\begin{pmatrix}
+-\frac{1}{16} & -\frac{1}{16}
+\end{pmatrix} 32\begin{pmatrix}
+\frac{3}{16} & \frac{1}{16} \\
+\frac{1}{16} & \frac{3}{16}
+\end{pmatrix}\begin{pmatrix}
+x_{1} \\
+x_{2}
+\end{pmatrix} \\
+ & =\begin{pmatrix}
+-\frac{1}{16} & -\frac{1}{16}
+\end{pmatrix}\underbrace{ \begin{pmatrix}
+6 & 2 \\
+2  & 6
+\end{pmatrix} }_{ \Sigma _{11 }^{-1} }\begin{pmatrix}
+x_{1} \\
+x_{2}
+\end{pmatrix} \\
+ & = \begin{pmatrix}
+-\frac{1}{2}  & 
+-\frac{1}{2}
+\end{pmatrix}\begin{pmatrix}
+x_{1} \\
+x_{2}
+\end{pmatrix}  \\
+ & = -\frac{1}{2}x_{1}-\frac{1}{2}x_{2}
+\end{align}
+
+
+
+
+\begin{align}
+\Sigma _{3|12} & = \Sigma_{22} -\Sigma _{21}\Sigma _{11}^{-1}\Sigma _{12}  \\
+ & = \frac{3}{16} - \begin{pmatrix}
+-\frac{1}{16}  & -\frac{1}{16}
+\end{pmatrix}\begin{pmatrix}
+6 & 2 \\
+2  & 6
+\end{pmatrix} \begin{pmatrix}
+-\frac{1}{16} \\
+-\frac{1}{16}
+\end{pmatrix}  \\
+ & =\frac{3}{16}- \begin{pmatrix}
+-\frac{1}{2}   & 
+-\frac{1}{2}
+\end{pmatrix}\begin{pmatrix}
+-\frac{1}{16} \\
+-\frac{1}{16}
+\end{pmatrix}  \\
+ & =\frac{3}{16} -  \frac{1}{16} = \frac{1}{8}
+\end{align}
+
+
+$$
+X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}\left( -\frac{1}{2}x_{1}-\frac{1}{2}x_{2}, \frac{1}{8} \right)
+$$

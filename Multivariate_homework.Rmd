@@ -3,10 +3,10 @@ title: "Homework_multivariate"
 output: pdf_document
 date: "2025-03-26"
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 ```{r, include=FALSE}
 library(GGally)
@@ -34,42 +34,8 @@ for (i in 1:n){
     colSums() # questo dovrebbe essere un unico vettore della multinomiale (massimo valore dovrebbe essere uguale a 100)
 }
 M  # in teoria questi sono tanti samples dalla multinomiale no ? 
-
-rmultinom(100,1:2,prob=1/4)
-
-pr <- c(1,3,6,10) # normalization not necessary for generation
-rmultinom(10, 20, prob = pr)
-
-
 ```
-```{r}
-#prova v2 gervica 
-N<-100
-norm_samplev2_gervica<- matrix(NA, nrow=N, ncol=4)
-for (i in (1:N)){
-    M = matrix(NA, nrow=2000, ncol=4)
-    for (q in (1:2000)){
-       # questo sampla un numero a caso da (1 a 4 )
-    Y_hot_i = matrix(NA, nrow=n, ncol=4) # questa è la nx4 dove vanno inseriti i vettori già codificati
-    Y_i = sample(4,n,replace =T) #vettore non ancora codificato (contente tutte le 100 estrazioni)
-    for (j in (1:n)){
-       
-        Y_hot_i[j,] = as.numeric(1:4 %in% Y_i[j]) #questo crea i vettori one hot (li codifica) e li mette nella matrice
-      }
-    M[q,] = Y_hot_i %>%
-    colSums() # questo dovrebbe essere un unico vettore della multinomiale (massimo valore dovrebbe essere uguale a 100)
-    }
-  
-    norm_samplev2_gervica[i,]<-( colSums(M/2000) - 100* pi_0)*sqrt(2000)
-}
 
-```
-```{r}
-mu = c(0,0)
-Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
-plot(norm_samplev2_gervica[,1],norm_samplev2_gervica[,2])
-lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5)
-```
 
 
 ```{r}
@@ -95,6 +61,7 @@ Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
 plot(norm_samplev2[,1],norm_samplev2[,2])
 lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5)
 ```
+
 ```{r}
 #prova v3
 norm_samplev3<- matrix(NA, nrow=N, ncol=4)
