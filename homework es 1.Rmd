@@ -1,30 +1,40 @@
 ---
+title: "Homework ..."
+author: "Simone Gervasoni "
 output:
-  pdf_document: default
-  html_document: default
+  pdf_document:
+    toc: true
+    toc_depth: 2
 ---
+\newpage
+# Exercise 1
 
-## Punto 1
-$$
-i = 1 , \dots , n \quad Y_{i}\quad \text{be} \quad \in \{  1 , 2, \dots, p+1 \} 
-$$
- with probability $\pi_{1},\dots,\pi _{p},\pi _{p +1 }>0\quad\sum_{j=1}^{p+1}\pi _{j}=1$.
- The one-hot vector $Y_{i}=(Y_{i1},\dots,Y_{ip+1})$ such that $Y_{ij}=1\quad \text{when} \quad Y_{i}=j\implies \sum_{i=1}^{n}Y_{i}$ has multinomial distribution ie $\sum_{i=1}^{n}Y_{i}\sim \text{Multinomial}(n,\pi_{1},\dots,\pi _{p+1})$
- 
-$$
-Y_{i}= \left\{\begin{matrix}1\quad \text{with probability }\pi _{1}  \\ 2\quad \text{with probability }\pi _{2} \\\dots
-\\ p+1 \quad\quad\dots\quad\quad \ \ \pi _{2}
- \end{matrix}\right.
-$$
-$Y_{i}=(Y_{i1},\dots,Y_{i p+1})\to {1}\leq j \leq p+1\quad \text{and} \quad Y_{ij}=1$
+For $i = 1, \ldots, n$, let $Y_i$ be i.i.d. random variables taking values in $\{1, 2, \ldots, p, p+1\}$ with probabilities $\pi_1, \ldots, \pi_p, \pi_{p+1} > 0$, $\sum_{j=1}^{p+1} \pi_j = 1$. If we code $Y_i$ via the one-hot vector $Y_i = (Y_{i1}, \ldots, Y_{i, p+1})$ where $Y_{ij} = 1$ when $Y_i = j$, then $\sum_{i=1}^{n} Y_i$ has multinomial distribution, $\text{Multinomial}(n, \pi_1, \ldots, \pi_{p+1})$, and the multivariate Central Limit Theorem (CLT) implies
+\[
+\sqrt{n}(\hat{\pi} - \pi) \xrightarrow{d} \mathcal{N}_{p+1}(0, \mathrm{diag}(\pi) - \pi \pi^T)
+\]
+for $\hat{\pi} = n^{-1} \sum_{i=1}^{n} Y_i$ and $\pi = (\pi_1, \ldots, \pi_{p+1})$. Assume $n$ is sufficiently large so that $\sqrt{n}(\hat{\pi} - \pi)$ is normally distributed according to the CLT above and let $X$ be the vector of the first $p$ coordinates.
 
-So $Y_{i}$ codified as one hot vectors is distributed as such $Y_{i}\sim \text{Multinomial}(1,\pi_{1},\dots,\pi _{p+1})$.
+## Point 1 
 
-By the CLT we can say 
+**What is the distribution of $X$? Justify your answer.**
 
-\begin{align}
- & (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\text{diag}(\pi)-\pi \pi^{T}) \implies  \\
- \Sigma= & \begin{pmatrix}
+Let $Y_{i}\in \{ 1,2,\dots,p \}$ $i =1,\dots,n$ with probability $\pi_{1},\dots,\pi _{p},\pi _{p+1}>0$ and $\sum_{j=1}^{p+1}\pi _{j}=1$; i.e.
+$$
+Y_{i}=\left\{\begin{matrix}1 \quad \text{with probability } \pi_{1} \\ 
+2 \quad \text{with probability } \pi_{2} \\ 
+ \vdots \\ 
+p+1 \quad \text{with probability } \pi_{p+1}
+\end{matrix}\right.
+$$
+The one-hot vector $Y_{i}=(Y_{i1},\dots,Y_{ip+1})$ is such that $Y_{i}=1$ when $Y_{i}=j$. 
+So $Y_{i}$ codified as one hot vector is distributed as $Y_{i}\sim \text{Multinomial}(1,\pi_{1},\dots,\pi _{p+1})$.
+Further $\sum_{i=1}^{n}Y_{i}$ has multinational distribution $\sum_{i=1}^{n}Y_{i}\sim \text{Multinomial}(n,\pi_{1},\dots,\pi _{p+1})$.
+
+By the CLT we can say $$ (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\text{diag}(\pi)-\pi \pi^{T})$$.
+Where the covariance matrix is:
+\begin{align*}
+ \Omega= & \begin{pmatrix}
 \pi_{1} &  &  &     \\
  & \pi_{2} &    &  \\
  &  &  \ddots &   \\
@@ -49,7 +59,7 @@ By the CLT we can say
  \vdots&  & \ddots &     \\
  \pi _{p+1}\pi_{1}&  &  &  \pi^{2} _{p+1}
 \end{pmatrix}= \\
-\Sigma = &  \left(
+\Omega = &  \left(
 \begin{array}{ccc|c}
 \pi_{1}   (1-\pi _{1}) & -\pi_{1}\pi_{2} & \dots & -\pi_{1}\pi _{p+1} \\
 -\pi_{2}\pi_{1} & \pi_{2}(1-\pi_{2}) & \dots & -\pi_{2}\pi _{p+1} \\
@@ -57,22 +67,25 @@ By the CLT we can say
 -\pi _{p+1}\pi _{1} & -\pi _{p+1}\pi _{2} & \dots  & \pi _{p+1}(1-\pi _{p+1})
 \end{array}
 \right)
-\end{align} 
+\end{align*} 
 
 
-
-It's like $X_{1},\dots,X_{p}\sim \mathcal{N}_{p+1}(\underline{0}, \Sigma)$ so$X_{1},\dots ,X_{p}$ it's like the marginal of these component where $\underline{0}_{p}$ is the new vector of the mean with 0 component with dimension $p<p+1$ and
-$\Sigma _{p+1,p+1}=\underbrace{ \pi _{p+1} }_{ >0 }\underbrace{ (1-\pi _{p+1}) }_{ >0 (1) }>0$
-(1) $1-\pi _{p+1}>0 \Leftrightarrow \pi _{p+1}<1$  and this is true beacuse $\pi _{p+1}$
-is a probability so it is defined in (0,1)
-so the two condition are valid : 
+If we take the first p components of a Gaussian vector of  dimension p+1 , it is still a Gaussian vectorr of dimension p in fact:
 $$
-(X_{1},\dots,X_{p})\sim \mathcal{N}_{p}(\underline{0},\Sigma _{p\times p})
+(X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\Omega)
+$$
+* the new mean vector $\underline{0}_{p}$ is the vector of dimension $p<p+1$.
+* The element $\Omega _{p+1,p+1}=\underbrace{ \pi _{p+1} }_{ >0 }\underbrace{ (1-\pi _{p+1}) }_{  >^{(1)}\ 0}>0$
+(1) $1-\pi _{p+1}> 0\iff \pi _{p+1}<1$ and this is always true because $\pi _{p+1}$ is a probability that is defined $(0,1)$ .
+
+So we can say thatthe marginal distribution of the Gaussian vector of dimension p+1 is still a Gaussian:
+$$
+(X_{1},\dots,X_{p})\sim \mathcal{N}_{p}(0,\Sigma)
 $$
 
 where 
 $$
-\Sigma _{p\times p}=\left(
+\Sigma:=\Omega _{p\times p}=\left(
 \begin{array}{cccc}
 \pi_{1}   (1-\pi _{1}) & -\pi_{1}\pi_{2} & \dots & -\pi_{1}\pi _{p} \\
 -\pi_{2}\pi_{1} & \pi_{2}(1-\pi_{2}) & \dots & -\pi_{2}\pi _{p} \\
@@ -82,7 +95,9 @@ $$
 \right)
 $$
 
-## Punto 2
+## Point 2
+**Let $\Sigma$ be the $p \times p$ covariance matrix of $X$. Find the inverse of $\Sigma$.**
+
 We want to find the inverse of the covariance matrix:  
 $$  
 \Sigma = \begin{pmatrix}  
@@ -92,21 +107,23 @@ $$
 -\pi_p\pi_1&-\pi_p\pi_2 &\dots&\pi_p^2\\  
 \end{pmatrix}  
 $$ 
-First of all we need to check if the matrix is invertible, so we need to prove that $det(\Sigma) \neq 0$  
-Since evaluating the determinant is not quite easy, we find a Lemma that give us an equivalent condition for the invertibility: 
+First of all we need to check if the matrix is invertible, so we need to prove that $det(\Sigma) \neq 0.$  
+Since evaluating the determinant is not quite easy, we find a **Lemma** that give us an equivalent condition for the invertibility.
   
-Sherman Morrison Formula: 
-Suppose $A\in \mathbb{R}^{n\times n}$ invertible and $u,v \in \mathbb{R}$ are column vectors. $A + uv^T$ is invertible $\iff 1+v^TAu\neq 0$.In this case: $(A+uv^T) = A^{-1} - \frac{A^{-1}uv^TA^{-1}}{1+v^TA^{-1}u} (2)$ . 
+**Sherman Morrison Formula**:
+
+Suppose $A\in \mathbb{R}^{n\times n}$ invertible and $u,v \in \mathbb{R}$ are column vectors. $A + uv^T$ is invertible $\iff 1+v^TAu\neq 0$. In this case:
+$$(A+uv^T) = A^{-1} - \frac{A^{-1}uv^TA^{-1}}{1+v^TA^{-1}u}. $$ 
   
-Application: we know that 
+In our case we have:
 $$ 
 \Sigma = diag(\pi_1,\dots,\pi_p) - \pi\pi^T =  
 A + uv^T  
 $$  
 where:
-- $A=\text{diag}(\pi_1,\dots,\pi_p)\in \mathbb{R}^{p\times p}$ 
--  $u =\begin{pmatrix} -\pi_1\\ -\pi_2\\ \vdots \\ -\pi_p  \end{pmatrix}$
-- $v^{T} =\begin{pmatrix}\pi_{1} & \dots & \pi _{p}\end{pmatrix}$ 
+* $A=\text{diag}(\pi_1,\dots,\pi_p)\in \mathbb{R}^{p\times p}$ 
+* $u =\begin{pmatrix} -\pi_1\\ -\pi_2\\ \vdots \\ -\pi_p  \end{pmatrix}$
+* $v^{T} =\begin{pmatrix}\pi_{1} & \dots & \pi _{p}\end{pmatrix}$ 
 
 Remark : in our case there is a minus so to be coherent with the notation of the formula (2) we take the minus inside the vector $u$. 
 
@@ -120,7 +137,8 @@ $$
 $$
 so it is invertible beacuse the determinant is bigger than 0 
 
-To apply the theorem we check that $1+ v^{T}A^{-1}u^{}\neq 0$
+To apply the **Lemma** we check that $1+ v^{T}A^{-1}u^{}\neq 0.$
+
 Since A is a diagonal matrix we know that the inverse is as such: 
 $$
 A^{-1}=\begin{pmatrix}
@@ -145,7 +163,7 @@ $$
 $$
 
 
-\begin{align}
+\begin{align*}
  & = 1 + \begin{pmatrix}
 1  &  1  & \dots & 1
 \end{pmatrix}\begin{pmatrix}
@@ -153,19 +171,20 @@ $$
 \vdots  \\
  -\pi _{p} 
 \end{pmatrix} =  \\
- & =1- (\pi _{1}+\dots+\pi _{p})\neq0 \Leftrightarrow \pi _{1}+\dots+\pi _{p}\neq 1
-\end{align}
+ & =1- (\pi _{1}+\dots+\pi _{p})\neq0 \Leftrightarrow \pi _{1}+\dots+\pi _{p}\neq^{(2)} 1
+\end{align*}
 
-this is always true by hypothesis $\sum_{i=1}^{p+1}\pi _{i}=1$ and $\pi _{i}>0$ so $\sum_{i=1}^{p}\pi _{i}<1$ because  $\pi _{p+1}$ is missing
-The hypotesis of the theorem are verifed now we need to find 
+(2) this is always true beacuse by hypothesis $\sum_{i=1}^{p+1}\pi _{i}=1$ and $\pi _{i}>0$ so $\sum_{i=1}^{p}\pi _{i}<1$ because  $\pi _{p+1}$ is missing.
+
+The hypotesis of the **Lemma** are verifed now we need to find 
 $$
 (A+uv^{T})^{-1} = A^{-1}- \frac{A^{-1}uv^{T}A^{-1}}{\underbrace{ 1+v^{t}A^{-1}u }_{ 1-(\pi _{1}+\dots +\pi _{p})=\pi _{p+1} }}
 $$
 
 The numerator of the fraction is the following
 
-\begin{align}
- & \underset{ p\times p }{ \begin{pmatrix}
+\begin{align*}
+A^{-1}uv^{T}A^{-1}  & = \underset{ p\times p }{ \begin{pmatrix}
 \frac{1}{\pi_{1}}  &  &  \\
  & \ddots &  \\
  &  & \frac{1}{\pi _{p}}
@@ -179,8 +198,8 @@ The numerator of the fraction is the following
 \frac{1}{\pi_{1}}  &  &  \\
  & \ddots &  \\
  &  & \frac{1}{\pi _{p}}
-\end{pmatrix} =  \\
- & \begin{pmatrix}
+\end{pmatrix}   \\ & =
+  \begin{pmatrix}
 -1  \\
 -1 \\
 \vdots\\
@@ -191,8 +210,8 @@ The numerator of the fraction is the following
 \frac{1}{\pi_{1}}  &  &  \\
  & \ddots &  \\
  &  & \frac{1}{\pi _{p}}
-\end{pmatrix} =  \\
- & \begin{pmatrix}
+\end{pmatrix}   \\
+ & = \begin{pmatrix}
 -\pi _{1} & \dots & -\pi _{p} \\  
 -\pi _{1} & \dots & -\pi _{p} \\ 
 \vdots &  &  \vdots\\ 
@@ -207,18 +226,18 @@ The numerator of the fraction is the following
 \vdots& & \vdots \\
 -1 & \dots & -1
 \end{pmatrix}}
-\end{align}
+\end{align*}
 
 
 
 
-\begin{align}
- & \Sigma^{-1} = A^{-1}-\begin{pmatrix}
+\begin{align*}
+ \Sigma^{-1} &= A^{-1}-\begin{pmatrix}
 -\frac{1}{\pi _{p+1} }& \dots &- \frac{1}{\pi _{p+1} } \\
 \vdots &\ddots  & \vdots \\
 -\frac{1}{\pi _{p+1} }& \dots & -\frac{1}{\pi _{p+1} }
-\end{pmatrix}=  \\
- & \begin{pmatrix}
+\end{pmatrix}  \\
+& = \begin{pmatrix}
 \frac{1}{\pi_{1}}  &  &  \\
  & \ddots &  \\
  &  & \frac{1}{\pi _{p}}
@@ -226,93 +245,247 @@ The numerator of the fraction is the following
 \frac{1}{\pi _{p+1} }& \dots & \frac{1}{\pi _{p+1} } \\
 \vdots &\ddots  & \vdots \\
 \frac{1}{\pi _{p+1} }& \dots & \frac{1}{\pi _{p+1} }
-\end{pmatrix}= \\
- & \begin{pmatrix}
+\end{pmatrix}\\
+ & = \begin{pmatrix}
 \frac{1}{\pi_{1}}+\frac{1}{\pi _{p+1}} & \frac{1}{\pi _{p+1}} & \dots & \frac{1}{\pi _{p+1}}\\
 \frac{1}{\pi _{p+1}} & \frac{1}{\pi_{2}}+\frac{1}{\pi _{p+1}} & \dots & \frac{1}{\pi _{p+1}}\\
 \vdots & \vdots &   & \vdots \\
 \frac{1}{\pi _{p+1}} & \frac{1}{\pi _{p+1}} & \dots & \frac{1}{\pi _{p}}+\frac{1}{\pi _{p+1}}
 \end{pmatrix}
-\end{align}
+\end{align*}
+
+## Point 3
+**Let $\pi = \left( \pi_0, \ldots, \pi_0,1-p\pi_{0} \right)$ for some $0 < \pi_0 < 1/p$. Find the eigenvalues of $\Sigma$. How large should $p$ be such that the proportion of variance explained by the last (population) principal component account for less than 20\% of total variation of $X$?**
+
+3.1 Find the eigenvalues $\Sigma$
+
+\begin{align*}
+\Sigma &  =diag(\lambda_{1},\dots,\lambda _{n}) - \pi_{0}\pi^{T} \\
+ & =\pi_{0}\begin{pmatrix}1 &  &  & \\  & 1 & &  \\ &  & \ddots  &   \\  &  &  &  1\end{pmatrix}  
+ + \pi_{0}^{2}\underbrace{ \begin{pmatrix}-1 & -1 & \dots & -1 \\ -1 & -1 & \dots & -1  \\ \vdots  & \vdots & \vdots & \vdots \\ -1 & -1 & \dots & -1  \end{pmatrix} }_{ J_{p} } \\
+ & =\pi_{0}I_{p}+\pi_{0}^{2}J_{p} \\
+ & =\pi_{0}I_{p}-\pi_{0}^{2}A
+\end{align*}
 
 
-## Punto 3
+
+where $A=\begin{pmatrix}1 & 1 & \dots & 1 \\ 1 & 1 & \dots & 1  \\ \vdots  & \vdots & \vdots & \vdots \\ 1 & 1 & \dots & 1  \end{pmatrix}$
+
+At first we want to find the eigenvalues of the matrix A.We observe that 
+$$
+Av=\begin{pmatrix}1 & 1 & \dots & 1 \\ 1 & 1 & \dots & 1  \\ \vdots  & \vdots & \vdots & \vdots \\ 1 & 1 & \dots & 1  \end{pmatrix}\underbrace{ \begin{pmatrix}
+1   \\
+ 1  \\
+ \vdots  \\
+ 1 
+\end{pmatrix} }_{ v }=pv
+$$
+so by definiton of eigenvalue and eigenvectors we can say that the eigenvalue of our matrix $A$ is $\lambda_{1}=p$. The $\text{rank}(A)=1$ so $\lambda_{1}$ is the only eigenvalue different from 0. 
+**Spectral theorem (for real symmetric matrices)**
+Let $A\in \mathbb{R}^{n\times n}$ be real and symmetric. Then
+1. The eigenvalues of $A$ are real .
+2. $A$ is diagonalizable.
+3. There is an orthonormal basis of $\mathbb{R}^{n}$ consiting on the eigenvectors of $A$.
+In short, $A$ may be orthonormaly diagonalized: $A=VDV^{T}$ where $V\in \mathbb{R}^{n\times n}$ is an orthonormal matrix of eigenvectors of $A$ and $D$ is a real diagonal matrix of eigenvalues of $A$.
+So by the **Spectral Theorem** we can say that $\exists Q\in \mathbb{R}^{p\times p}$ orthonormal matrix such that $A=QDQ^{T}$ where $D=\begin{pmatrix}p & 0 & \dots & 0 \\ 0 & 0 & \dots  & 0 \\ \vdots&  & \ddots  & \vdots \\ 0 & 0 &\dots & 0\end{pmatrix}$ .
+
+Now we find the eigenvalue of $\Sigma=\pi_{0}(I_{p}-\pi_{0}A)$.
+We recover $A$ with $QDQ^{T}$:
+
+\begin{align*}
+\Sigma & =\pi_{0}(I_{p}-\pi_{0}QDQ^{T}) \\
+ & = \pi_{0}(QI_{p}Q^{T}-\pi_{0}QDQ^{T})  \\
+ & = \pi_{0}Q(I_{p}-\pi_{0}D )Q^{T} 
+\end{align*}
+
+**Defintion Similar Matrix**
+A matrix $A$ is said similar to $B\iff \exists P$ invertible such that $A=P^{-1}BP$ .
+
+From this definition and by how we wrote $\Sigma$ we can say that the matrices $\Sigma$ and $T:=\pi_{0}(I_{p}-\pi_{0}D)$ are similar so we can proceed by finding the eigenvalues of $T$ (since two similar matrices share the same eigenvalues).
 
 
-## Punto 4
+\begin{align*}
+|T-\lambda I_{p}| & =\left| \begin{pmatrix}
+\pi_{0}(1-p\pi_{0} ) - \lambda&  &  &  \\
+ & \pi_{0}-\lambda &  &  \\
+ &  & \ddots &  \\
+ &  &  &  & \pi_{0}-\lambda
+\end{pmatrix}\right| =0 \\
+ &= [\pi_{0} (1-p\pi_{0} )-\lambda] \cdot(\pi_{0}-\lambda)^{p-1} = 0
+\end{align*}
+
+
+So the eigenvalues of $\Sigma$ are $\tilde{\lambda}_{1}=\pi_{0}(1-p\pi_{0})$ and $\tilde{\lambda}_{2}=\dots=\tilde{\lambda}_{p}=\pi_{0}$.
+
+
+
+
+
+3.2 
+In order to find p such that the proportion of the variance explained by the last principal component is less than 20% we need to find the smallest eigenvalue.
+$$
+\tilde{\lambda} = (\pi_{0}(1-\pi_{0}p),\underbrace{ \pi_{0},\dots,\pi_{0} }_{ p-1 })
+$$
+
+
+\begin{align*}
+ & \pi_{0}>\pi_{0}(1-\pi_{0}p) \\
+ & 1>(1-\pi_{0}p) \\
+ & \pi_{0}p>0 \quad\forall p>0 
+\end{align*}
+
+So we have that the smallest eigen value $\tilde{\lambda}_{p}=\pi_{0}(1-\pi_{0}p)$. 
+Now we find the total variance as the sum of the eigenvalues of $\Sigma$:
+
+\begin{align*}
+Var(X)  & = (1-\pi_{0}p)\pi_{0} + \pi_{0}(p-1) = \\
+ & =\pi_{0}-\pi_{0}^{2}p+\pi_{0}p-\pi_{0}  \\
+ & = \pi_{0}p(1-\pi_{0}) 
+\end{align*}
+
+
+And using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion less then 20%
+
+\begin{align*}
+ &  \frac{{ \pi_{0} }(1-\pi_{0}p)}{{ \pi_{0} }p(1-\pi_{0}) } < \frac{1}{5} \quad 0 < \pi_{0}< \frac{1}{p} \\
+ & \frac{(1-\pi_{0}p)}{p(1-\pi_{0})}-\frac{1}{5}<0 \\
+ & \frac{5\pi(1-\pi_{0}p)-\pi_{0}p(1-\pi_{0})}{5\pi_{0}p(1-\pi)}<0  \\
+ & \frac{5\pi_{0}-5\pi_{0}^{2}p-\pi_{0}p+\pi_{0}^{2}p}{5\pi_{0}p(1-\pi_{0})}<0 \\
+ & \frac{-\pi_{0}^{2}-\pi_{0}p+5\pi_{0}}{5\pi_{0}p(1-\pi_{0})}<0 \\
+& \frac{{ \pi_{0} }p(-4\pi_{0}-1)+5\pi_{0}}{5{ \pi_{0} }p(1-\pi_{0})}<0 \\
+ & p(-4\pi_{0}-1 )+5< 0  \\
+ & p> \frac{5}{4\pi_{0}+1}
+\end{align*}
+
+
+
+If we want to get rid on the dependence on $\pi_{0}$ and get a lower bound we ought to analyze the worst case scenario that is when the first (p-1) explain little variance hence $\pi_{0}$ is close to zero and since the sum has to be one the last would assume the greatest value possible.
+Now if we let  $\pi_{0} \to 0$ we get a lower bound not depending on $\pi_{0}$ which is the following: 
+$$
+p> \frac{5}{\underbrace{ 4\pi_{0} }_{ 0 }+1} =5
+$$
+
+## Point 4
+**Perform a simulation study with $p = 3$, $\pi_0 = 1/4$ and $N = 1000$ Monte Carlo samples of $n = 100$ multinomially distributed $Y_i$. For $X = (X_1, X_2, X_3)$, make a scatterplot of the $N$ values of $X_2$ vs $X_1$ and sketch the ellipse corresponding to the contour of the (theoretical limiting) bivariate density of $(X_1, X_2)$ which contains 95\% probability.**
+```{r echo=FALSE , results='hide', message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ellipse)
+```
+
+We firstly initialize the variables such that they are coherent with the text, then we sample from a uniform discrete random variable (since each outcome is equally likely with probability $\pi_{0}=\frac{1}{4}$ ). After we codify $Y_{i}$ with one-hot random vectors.($Y_{i}\sim \text{Multinomial}\left( 1, \frac{1}{4}, \frac{1}{4},\frac{1}{4},\frac{1}{4} \right)$).
+Once we sample $n=100$ $Y_{i}$, we sum the columns to get the random variable which is distributed as a $\sum_{i=1}^{100}Y_{i}\sim \text{Multinomial}\left( 100, \frac{1}{4}, \frac{1}{4},\frac{1}{4},\frac{1}{4} \right)$, we repeat this process $N=1000$ and we apply the CLT on this $1000$ sample to get the random vector $\sqrt{ n }(\hat{\pi}-\pi)\sim \mathcal{N}_{4}(\underline{0},\text{diag}(\pi)-\pi \pi^{T})$. 
 
 ```{r}
+#We set seed to standardize result
+set.seed(4567) 
 p = 3
-pi_0 = 1/4 # da quanto ho capito è uniforme la prob 
-N = 1000 
+pi_0 = 1/4 
+N = 1000
 n= 100
 
-M = matrix(NA, nrow= n,ncol=4 )
-for (i in 1:n){
-  # questo sampla un numero a caso da (1 a 4 )
-  Y_hot_i = matrix(NA, nrow=N, ncol=4) # questa è la nx4 dove vanno inseriti i vettori già codificati
-  Y_i = sample(4,N,replace =T) #vettore non ancora codificato (contente tutte le 100 estrazioni)
-  for (j in (1:N)){
-   
-    Y_hot_i[j,] = as.numeric(1:4 %in% Y_i[j]) #questo crea i vettori one hot (li codifica) e li mette nella matrice
-  }
-   
-  M[i,] = Y_hot_i %>%
-    colSums() # questo dovrebbe essere un unico vettore della multinomiale (massimo valore dovrebbe essere uguale a 100)
-}
-M  # in teoria questi sono tanti samples dalla multinomiale no ? 
-```
-
-
-
-```{r}
-#prova v2
-norm_samplev2<- matrix(NA, nrow=N, ncol=4)
+norm_sample<- matrix(NA, nrow=N, ncol=4)
 for (i in (1:N)){
-      # questo sampla un numero a caso da (1 a 4 )
-  Y_hot_i = matrix(NA, nrow=n, ncol=4) # questa è la nx4 dove vanno inseriti i vettori già codificati
-  Y_i = sample(4,n,replace =T) #vettore non ancora codificato (contente tutte le 100 estrazioni)
+  # Matrix nx4 for codified vector inizialed as full of NAs
+  Y_hot_i = matrix(NA, nrow=n, ncol=4) 
+  # Samples from a uniform discrete (not yet codified)
+  Y_i = sample(4,n,replace =T)  
   for (j in (1:n)){
-     
-      Y_hot_i[j,] = as.numeric(1:4 %in% Y_i[j]) #questo crea i vettori one hot (li codifica) e li mette nella matrice
+      # This transforms the Yi (not yet codified) into the codified vector
+      Y_hot_i[j,] = as.numeric(1:4 %in% Y_i[j]) 
     }
   M = Y_hot_i %>%
-  colSums() # questo dovrebbe essere un unico vettore della multinomiale (massimo valore dovrebbe essere uguale a 100)
-  print(i)
-  norm_samplev2[i,]<-(M/n - pi_0)*sqrt(n)
+  colSums() 
+  norm_sample[i,]<-(M/n - pi_0)*sqrt(n)
 }
+X <- norm_sample[,1:3]
 
 
-mu = c(0,0)
+```
+We then pick the first 3 columns to get X, we plot the first two, and draw the countor line for the theoretical bivariate distribution parameterized as such $\mathcal{N}_{2}\left( \underline{0}, \begin{bmatrix}\frac{3}{16}& -\frac{1}{16}  \\ -\frac{1}{16}& \frac{3}{16}\end{bmatrix} \right)$
+
+
+
+```{r}
 Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
-plot(norm_samplev2[,1],norm_samplev2[,2])
-lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5)
+sigma.e <- eigen(Sigma)
+#eigen vectors
+P <- sigma.e$vectors
+lambda <- sigma.e$values
+mu <- c(0,0)
+e1 <- P[,1]
+e2 <- P[,2]
+b <- e1[2]/e1[1]
+a <- b*mu[1]+ mu[2]
+b2 <- e2[2]/e2[1]
+a2 <- b2*mu[1]+ mu[2]
 ```
 
 ```{r}
-#prova v3
-norm_samplev3<- matrix(NA, nrow=N, ncol=4)
-for (i in (1:N)){
-  M<-rmultinom(1,size=100,prob=c(1/4,1/4,1/4,1/4))
-  norm_samplev3[i,]<-(M/n - pi_0)*sqrt(n)
-}
+cc<-sqrt(qchisq(0.95, 2))
+
+x<-cbind(cc*sqrt(lambda[1])*e1+mu,
+         -cc*sqrt(lambda[1])*e1+mu,
+         cc*sqrt(lambda[2])*e2+mu,
+         -cc*sqrt(lambda[2])*e2+mu)
+```
+
+```{r}
 mu = c(0,0)
 Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
-plot(norm_samplev3[,1],norm_samplev3[,2])
+Cor = matrix( c(1 , -1/3, -1/3,1) ,nrow=2 , ncol=2)
+plot(X[,1],X[,2], xlab="X1", ylab = "X2", main="Scatterplot X2 vs X1",
+  , asp=1)
 lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5)
-
+abline(a = a , b=b)
+abline(a= a2, b=b2)
+abline(h=0,v=0)
+arrows(x[1,1],x[2,1],x[1,2],x[2,2],code=2,col="brown",lwd=3)
+arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="brown",lwd=3)
 ```
 
 
-## Punto 5
-Given a vector a Gaussian random vector we know that conditioning on a Gaussian random variable the conditioned vector is still Gaussian with parameters : 
-$$
-\overline{\mu} = \mu_1 + \Sigma_{12}\Sigma_{22}^{-1}(a-\mu_2) 
-$$ 
 
-$$
-\overline{\Sigma}=\Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}  
-$$  
+```{r}
+set.seed(4567) 
+
+norm_samplev2<- matrix(NA, nrow=N, ncol=4)
+for (i in (1:N)){
+  M<-rmultinom(1,size=n,prob=c(1/4,1/4,1/4,1/4))
+  norm_samplev2[i,]<-(M/n - pi_0)*sqrt(n)
+}
+Xv2 <- norm_samplev2[,1:3]
+mu = c(0,0)
+Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
+plot(Xv2[,1],Xv2[,2], xlab="X1", ylab = "X2", main="Scatterplot X2 vs X1", asp=1)
+lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5,asp=1)
+abline(a = a , b=b)
+abline(a= a2, b=b2)
+abline(h=0,v=0)
+points(x[1,],x[2,],pch=21,bg="brown")
+arrows(x[1,1],x[2,1],x[1,2],x[2,2],code=2,col="brown",lwd=3)
+arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="brown",lwd=3)
+```
+```{r}
+set.seed(4567) 
+
+M<-rmultinom(N,size=n,prob=c(1/4,1/4,1/4,1/4)) / n 
+norm_samplev2<-(M/n - pi_0)*sqrt(n)
+cor(norm_sample)
+```
+
+
+
+## Point 5
+**Find the conditional distributions of $(X_1, X_2) \mid X_3 = x_3$ and of $X_3 \mid (X_1 = x_1, X_2 = x_2)$.**
+
+Given a Gaussian random vector we know that conditioning on it the conditioned vector is still Gaussian with parameters : 
+
+\begin{align*}
+\overline{\mu} &= \mu_1 + \Sigma_{12}\Sigma_{22}^{-1}(a-\mu_2)  \\
+\overline{\Sigma}&= \Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}  
+\end{align*}
+
+  
  
 We know that $(X_{1},X_{2},X_{3}) \sim \mathcal{N}_3(\underline{0}, \Sigma)$ where  
 
@@ -341,22 +514,22 @@ $$
 $$
 
 
-We need to find the distribution of $(X_1,X_2)|X_3=x_3 \sim \mathcal{N}_2(\mu_{12|3}, \Sigma_{12|3})$ .
+5.1 We need to find the distribution of $(X_1,X_2)|X_3=x_3 \sim \mathcal{N}_2(\mu_{12|3}, \Sigma_{12|3})$ .
 
-So now we have to apply the formula above:  
-  
+So now we have to apply the formula above adapting the notation to our conditioned vector.
 
-\begin{align}
- & \mu_{12|3} := \mu_{12} + \Sigma_{12}\Sigma_{22}^{-1}(x_3-\mu_3)= \\
- &   
-\begin{pmatrix}
+The mean vector is:
+
+\begin{align*}
+  \mu_{12|3}  & = \mu_{12} + \Sigma_{12}\Sigma_{22}^{-1}(x_3-\mu_3) \\ 
+ & =\begin{pmatrix}
 \mu_{1} \\
 \mu_{2}
 \end{pmatrix}+\begin{pmatrix}
 -\frac{1}{16} \\
 -\frac{1}{16}
-\end{pmatrix} \frac{16}{3}  (x_{3}-\mu_{3})= \\
- & \begin{pmatrix}
+\end{pmatrix} \frac{16}{3}  (x_{3}-\mu_{3}) \\
+ &= \begin{pmatrix}
 0 \\
 0
 \end{pmatrix} + \begin{pmatrix}
@@ -366,12 +539,10 @@ So now we have to apply the formula above:
 -\frac{1}{3}x_{3} \\
 - \frac{1}{3}x_{3}
 \end{pmatrix}
-\end{align}
+\end{align*}
 
-
-
-\begin{align}
- \Sigma _{12|3}   : & = \Sigma _{11}-\Sigma_{12}\Sigma _{22}^{-1}\Sigma _{21}  \\
+\begin{align*}
+ \Sigma _{12|3}    & = \Sigma _{11}-\Sigma_{12}\Sigma _{22}^{-1}\Sigma _{21}  \\
  & = \begin{pmatrix}
 \frac{3}{16} & -\frac{1}{16} \\
 -\frac{1}{16} & \frac{3}{16}
@@ -391,9 +562,11 @@ So now we have to apply the formula above:
  & = \begin{pmatrix}
 \frac{1}{6}  & -\frac{1}{12} \\
 -\frac{1}{12} & \frac{1}{6}
-\end{pmatrix}
-\end{align}
+\end{pmatrix}.
+\end{align*}
 
+
+So a the end 
 $$
 (X_{1},X_{2})|X_{3}=x_{3} \sim \mathcal{N}_{2}\left( \begin{bmatrix}
 -\frac{1}{3}x_{3} \\
@@ -401,17 +574,17 @@ $$
 \end{bmatrix}, \begin{bmatrix}
 \frac{1}{6}  & -\frac{1}{12} \\
 -\frac{1}{12} & \frac{1}{6}
-\end{bmatrix}\right)
+\end{bmatrix}\right).
 $$
-We now that 
-
+5.2
+We now have to find the gaussian random variable:
 $$
-X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}_{1} ( \mu_{3|12}, \Sigma _{3|12})
+X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}_{1} ( \mu_{3|12}, \Sigma _{3|12}).
 $$
 
-now we define we get the mean vector is 
+Now we get the mean:
 
-\begin{align}
+\begin{align*}
 \mu_{3|1,2}  & = \mu_{3}+\Sigma_{12}\Sigma _{11}^{-1}\begin{pmatrix}
 x_{1}-\mu_{1} \\
 x_{2}-\mu_{2}
@@ -423,8 +596,7 @@ x_{2}-\mu_{2}
 \frac{1}{16} & \frac{3}{16}
 \end{pmatrix}\begin{pmatrix}
 x_{1} \\
-x_{2}
-\end{pmatrix} \\
+x_{2} \end{pmatrix} \\
  & =\begin{pmatrix}
 -\frac{1}{16} & -\frac{1}{16}
 \end{pmatrix}\underbrace{ \begin{pmatrix}
@@ -432,8 +604,7 @@ x_{2}
 2  & 6
 \end{pmatrix} }_{ \Sigma _{11 }^{-1} }\begin{pmatrix}
 x_{1} \\
-x_{2}
-\end{pmatrix} \\
+x_{2}\end{pmatrix} \\
  & = \begin{pmatrix}
 -\frac{1}{2}  & 
 -\frac{1}{2}
@@ -442,12 +613,12 @@ x_{1} \\
 x_{2}
 \end{pmatrix}  \\
  & = -\frac{1}{2}x_{1}-\frac{1}{2}x_{2}
-\end{align}
+\end{align*}
 
 
+And variance:
 
-
-\begin{align}
+\begin{align*}
 \Sigma _{3|12} & = \Sigma_{22} -\Sigma _{21}\Sigma _{11}^{-1}\Sigma _{12}  \\
  & = \frac{3}{16} - \begin{pmatrix}
 -\frac{1}{16}  & -\frac{1}{16}
@@ -466,9 +637,9 @@ x_{2}
 -\frac{1}{16}
 \end{pmatrix}  \\
  & =\frac{3}{16} -  \frac{1}{16} = \frac{1}{8}
-\end{align}
+\end{align*}
 
-
+So at the end:
 $$
 X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}\left( -\frac{1}{2}x_{1}-\frac{1}{2}x_{2}, \frac{1}{8} \right)
 $$
