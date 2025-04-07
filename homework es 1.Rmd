@@ -1,6 +1,11 @@
 ---
-title: "Homework ..."
-author: "Simone Gervasoni "
+title: "Problem Set 1"
+author: |
+  Matteo Allegrini (423094)  
+  Leonardo Federico De Blasio (40293)  
+  Simone Maria Gervasoni (115376)  
+  Alice Leto (232032)  
+  Marinella Nigro (312312)
 output:
   pdf_document:
     toc: true
@@ -17,7 +22,7 @@ for $\hat{\pi} = n^{-1} \sum_{i=1}^{n} Y_i$ and $\pi = (\pi_1, \ldots, \pi_{p+1}
 
 ## Point 1 
 
-**What is the distribution of $X$? Justify your answer.**
+What is the distribution of $X$? Justify your answer.
 
 Let $Y_{i}\in \{ 1,2,\dots,p \}$ $i =1,\dots,n$ with probability $\pi_{1},\dots,\pi _{p},\pi _{p+1}>0$ and $\sum_{j=1}^{p+1}\pi _{j}=1$; i.e.
 $$
@@ -31,8 +36,9 @@ The one-hot vector $Y_{i}=(Y_{i1},\dots,Y_{ip+1})$ is such that $Y_{i}=1$ when $
 So $Y_{i}$ codified as one hot vector is distributed as $Y_{i}\sim \text{Multinomial}(1,\pi_{1},\dots,\pi _{p+1})$.
 Further $\sum_{i=1}^{n}Y_{i}$ has multinational distribution $\sum_{i=1}^{n}Y_{i}\sim \text{Multinomial}(n,\pi_{1},\dots,\pi _{p+1})$.
 
-By the CLT we can say $$ (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\text{diag}(\pi)-\pi \pi^{T})$$.
+By the CLT we can say $$ (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\text{diag}(\pi)-\pi \pi^{T}).$$
 Where the covariance matrix is:
+
 \begin{align*}
  \Omega= & \begin{pmatrix}
 \pi_{1} &  &  &     \\
@@ -48,7 +54,7 @@ Where the covariance matrix is:
 \dots   & 
 \pi _{p+1}
 \end{pmatrix} \\
- & \begin{pmatrix}
+ = & \begin{pmatrix}
 \pi_{1} &  &  &     \\
  & \pi_{2} &    &  \\
  &  &  \ddots &   \\
@@ -58,23 +64,24 @@ Where the covariance matrix is:
  \pi_{2}\pi_{1}& \pi_{2}^{2} & \dots  & \pi_{2}\pi _{p+1} \\
  \vdots&  & \ddots &     \\
  \pi _{p+1}\pi_{1}&  &  &  \pi^{2} _{p+1}
-\end{pmatrix}= \\
+\end{pmatrix} \\
 \Omega = &  \left(
 \begin{array}{ccc|c}
 \pi_{1}   (1-\pi _{1}) & -\pi_{1}\pi_{2} & \dots & -\pi_{1}\pi _{p+1} \\
 -\pi_{2}\pi_{1} & \pi_{2}(1-\pi_{2}) & \dots & -\pi_{2}\pi _{p+1} \\
-\vdots &  &  &  \\ \hline \\
+\vdots & \vdots  &  &\vdots   \\ \hline 
 -\pi _{p+1}\pi _{1} & -\pi _{p+1}\pi _{2} & \dots  & \pi _{p+1}(1-\pi _{p+1})
 \end{array}
 \right)
-\end{align*} 
-
+\end{align*}
 
 If we take the first p components of a Gaussian vector of  dimension p+1 , it is still a Gaussian vectorr of dimension p in fact:
 $$
 (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\Omega)
 $$
-* the new mean vector $\underline{0}_{p}$ is the vector of dimension $p<p+1$.
+
+* The new mean vector $\underline{0}_{p}$ is the vector of dimension $p<p+1$.
+
 * The element $\Omega _{p+1,p+1}=\underbrace{ \pi _{p+1} }_{ >0 }\underbrace{ (1-\pi _{p+1}) }_{  >^{(1)}\ 0}>0$
 (1) $1-\pi _{p+1}> 0\iff \pi _{p+1}<1$ and this is always true because $\pi _{p+1}$ is a probability that is defined $(0,1)$ .
 
@@ -96,7 +103,8 @@ $$
 $$
 
 ## Point 2
-**Let $\Sigma$ be the $p \times p$ covariance matrix of $X$. Find the inverse of $\Sigma$.**
+
+Let $\Sigma$ be the $p \times p$ covariance matrix of $X$. Find the inverse of $\Sigma$.
 
 We want to find the inverse of the covariance matrix:  
 $$  
@@ -113,19 +121,25 @@ Since evaluating the determinant is not quite easy, we find a **Lemma** that giv
 **Sherman Morrison Formula**:
 
 Suppose $A\in \mathbb{R}^{n\times n}$ invertible and $u,v \in \mathbb{R}$ are column vectors. $A + uv^T$ is invertible $\iff 1+v^TAu\neq 0$. In this case:
-$$(A+uv^T) = A^{-1} - \frac{A^{-1}uv^TA^{-1}}{1+v^TA^{-1}u}. $$ 
-  
+
+\begin{equation}\label{Sherman Morrison Formula}
+(A+uv^T) = A^{-1} - \frac{A^{-1}uv^TA^{-1}}{1+v^TA^{-1}u}. 
+\end{equation}
+
 In our case we have:
 $$ 
 \Sigma = diag(\pi_1,\dots,\pi_p) - \pi\pi^T =  
 A + uv^T  
 $$  
 where:
+
 * $A=\text{diag}(\pi_1,\dots,\pi_p)\in \mathbb{R}^{p\times p}$ 
+
 * $u =\begin{pmatrix} -\pi_1\\ -\pi_2\\ \vdots \\ -\pi_p  \end{pmatrix}$
+
 * $v^{T} =\begin{pmatrix}\pi_{1} & \dots & \pi _{p}\end{pmatrix}$ 
 
-Remark : in our case there is a minus so to be coherent with the notation of the formula (2) we take the minus inside the vector $u$. 
+Remark: in our case there is a minus so to be coherent with the notation of the formula (\ref{Sherman Morrison Formula}) we take the minus inside the vector $u$. 
 
 Is A invertible? 
 $$
@@ -148,8 +162,8 @@ A^{-1}=\begin{pmatrix}
 \end{pmatrix}
 $$
 now we calculate :
-$$
-1+ v^{T}A^{-1}u^{} = 1 + \begin{pmatrix}
+\begin{align*}
+1+ v^{T}A^{-1}u^{} & = 1 + \begin{pmatrix}
 \pi_{1} & \dots & \pi _{p}
 \end{pmatrix}\begin{pmatrix}
 \frac{1}{\pi_{1}}  &  &  \\
@@ -159,11 +173,7 @@ $$
 -\pi_{1}   \\
 \vdots  \\
  -\pi _{p} 
-\end{pmatrix} = 
-$$
-
-
-\begin{align*}
+\end{pmatrix} 
  & = 1 + \begin{pmatrix}
 1  &  1  & \dots & 1
 \end{pmatrix}\begin{pmatrix}
@@ -174,15 +184,14 @@ $$
  & =1- (\pi _{1}+\dots+\pi _{p})\neq0 \Leftrightarrow \pi _{1}+\dots+\pi _{p}\neq^{(2)} 1
 \end{align*}
 
-(2) this is always true beacuse by hypothesis $\sum_{i=1}^{p+1}\pi _{i}=1$ and $\pi _{i}>0$ so $\sum_{i=1}^{p}\pi _{i}<1$ because  $\pi _{p+1}$ is missing.
+(2) this is always true because by hypothesis $\sum_{i=1}^{p+1}\pi _{i}=1$ and $\pi _{i}>0$ so $\sum_{i=1}^{p}\pi _{i}<1$ because  $\pi _{p+1}$ is missing.
 
-The hypotesis of the **Lemma** are verifed now we need to find 
+The hypothesis of the **Lemma** are verified now we need to find the inverse:
 $$
-(A+uv^{T})^{-1} = A^{-1}- \frac{A^{-1}uv^{T}A^{-1}}{\underbrace{ 1+v^{t}A^{-1}u }_{ 1-(\pi _{1}+\dots +\pi _{p})=\pi _{p+1} }}
+(A+uv^{T})^{-1} = A^{-1}- \frac{A^{-1}uv^{T}A^{-1}}{\underbrace{ 1+v^{t}A^{-1}u }_{ 1-(\pi _{1}+\dots +\pi _{p})=\pi _{p+1} }}.
 $$
 
-The numerator of the fraction is the following
-
+The numerator of the fraction is the following:
 \begin{align*}
 A^{-1}uv^{T}A^{-1}  & = \underset{ p\times p }{ \begin{pmatrix}
 \frac{1}{\pi_{1}}  &  &  \\
@@ -229,8 +238,7 @@ A^{-1}uv^{T}A^{-1}  & = \underset{ p\times p }{ \begin{pmatrix}
 \end{align*}
 
 
-
-
+Now we can substitue the quantity above to find the inverse of the matrix $\Sigma$:
 \begin{align*}
  \Sigma^{-1} &= A^{-1}-\begin{pmatrix}
 -\frac{1}{\pi _{p+1} }& \dots &- \frac{1}{\pi _{p+1} } \\
@@ -255,7 +263,7 @@ A^{-1}uv^{T}A^{-1}  & = \underset{ p\times p }{ \begin{pmatrix}
 \end{align*}
 
 ## Point 3
-**Let $\pi = \left( \pi_0, \ldots, \pi_0,1-p\pi_{0} \right)$ for some $0 < \pi_0 < 1/p$. Find the eigenvalues of $\Sigma$. How large should $p$ be such that the proportion of variance explained by the last (population) principal component account for less than 20\% of total variation of $X$?**
+Let $\pi = \left( \pi_0, \ldots, \pi_0,1-p\pi_{0} \right)$ for some $0 < \pi_0 < 1/p$. Find the eigenvalues of $\Sigma$. How large should $p$ be such that the proportion of variance explained by the last (population) principal component account for less than 20\% of total variation of $X$?
 
 3.1 Find the eigenvalues $\Sigma$
 
@@ -269,28 +277,35 @@ A^{-1}uv^{T}A^{-1}  & = \underset{ p\times p }{ \begin{pmatrix}
 
 
 
-where $A=\begin{pmatrix}1 & 1 & \dots & 1 \\ 1 & 1 & \dots & 1  \\ \vdots  & \vdots & \vdots & \vdots \\ 1 & 1 & \dots & 1  \end{pmatrix}$
+where $A=\begin{pmatrix}1 & 1 & \dots & 1 \\ 1 & 1 & \dots & 1  \\ \vdots  & \vdots & \vdots & \vdots \\ 1 & 1 & \dots & 1  \end{pmatrix}.$
 
-At first we want to find the eigenvalues of the matrix A.We observe that 
+At first we want to find the eigenvalues of the matrix A. We observe that: 
 $$
 Av=\begin{pmatrix}1 & 1 & \dots & 1 \\ 1 & 1 & \dots & 1  \\ \vdots  & \vdots & \vdots & \vdots \\ 1 & 1 & \dots & 1  \end{pmatrix}\underbrace{ \begin{pmatrix}
 1   \\
  1  \\
  \vdots  \\
  1 
-\end{pmatrix} }_{ v }=pv
+\end{pmatrix} }_{ v }=pv.
 $$
-so by definiton of eigenvalue and eigenvectors we can say that the eigenvalue of our matrix $A$ is $\lambda_{1}=p$. The $\text{rank}(A)=1$ so $\lambda_{1}$ is the only eigenvalue different from 0. 
+so by definition of eigenvalues and eigenvectors we can say that the eigenvalue of our matrix $A$ is $\lambda_{1}=p$. The $\text{rank}(A)=1$ so $\lambda_{1}$ is the only eigenvalue different from 0. 
+
 **Spectral theorem (for real symmetric matrices)**
+
 Let $A\in \mathbb{R}^{n\times n}$ be real and symmetric. Then
+
 1. The eigenvalues of $A$ are real .
+
 2. $A$ is diagonalizable.
+
 3. There is an orthonormal basis of $\mathbb{R}^{n}$ consiting on the eigenvectors of $A$.
+
 In short, $A$ may be orthonormaly diagonalized: $A=VDV^{T}$ where $V\in \mathbb{R}^{n\times n}$ is an orthonormal matrix of eigenvectors of $A$ and $D$ is a real diagonal matrix of eigenvalues of $A$.
+
 So by the **Spectral Theorem** we can say that $\exists Q\in \mathbb{R}^{p\times p}$ orthonormal matrix such that $A=QDQ^{T}$ where $D=\begin{pmatrix}p & 0 & \dots & 0 \\ 0 & 0 & \dots  & 0 \\ \vdots&  & \ddots  & \vdots \\ 0 & 0 &\dots & 0\end{pmatrix}$ .
 
-Now we find the eigenvalue of $\Sigma=\pi_{0}(I_{p}-\pi_{0}A)$.
-We recover $A$ with $QDQ^{T}$:
+Now we find the eigenvalue of $\Sigma=\pi_{0}(I_{p}-\pi_{0}A)$;
+we recover $A$ with $QDQ^{T}$:
 
 \begin{align*}
 \Sigma & =\pi_{0}(I_{p}-\pi_{0}QDQ^{T}) \\
@@ -298,7 +313,8 @@ We recover $A$ with $QDQ^{T}$:
  & = \pi_{0}Q(I_{p}-\pi_{0}D )Q^{T} 
 \end{align*}
 
-**Defintion Similar Matrix**
+**Definition Similar Matrix**
+
 A matrix $A$ is said similar to $B\iff \exists P$ invertible such that $A=P^{-1}BP$ .
 
 From this definition and by how we wrote $\Sigma$ we can say that the matrices $\Sigma$ and $T:=\pi_{0}(I_{p}-\pi_{0}D)$ are similar so we can proceed by finding the eigenvalues of $T$ (since two similar matrices share the same eigenvalues).
@@ -318,23 +334,20 @@ From this definition and by how we wrote $\Sigma$ we can say that the matrices $
 So the eigenvalues of $\Sigma$ are $\tilde{\lambda}_{1}=\pi_{0}(1-p\pi_{0})$ and $\tilde{\lambda}_{2}=\dots=\tilde{\lambda}_{p}=\pi_{0}$.
 
 
-
-
-
 3.2 
 In order to find p such that the proportion of the variance explained by the last principal component is less than 20% we need to find the smallest eigenvalue.
 $$
 \tilde{\lambda} = (\pi_{0}(1-\pi_{0}p),\underbrace{ \pi_{0},\dots,\pi_{0} }_{ p-1 })
 $$
 
+We check that $\pi_{0}>\pi_{0}(1-\pi_{0}p)$:
+$$
+ \pi_{0}>\pi_{0}(1-\pi_{0}p) \iff
+  1>(1-\pi_{0}p) \iff
+ \pi_{0}p>0 \quad\forall p>0 
+$$
+So we have that the smallest eigenvalue $\tilde{\lambda}_{p}=\pi_{0}(1-\pi_{0}p)$. 
 
-\begin{align*}
- & \pi_{0}>\pi_{0}(1-\pi_{0}p) \\
- & 1>(1-\pi_{0}p) \\
- & \pi_{0}p>0 \quad\forall p>0 
-\end{align*}
-
-So we have that the smallest eigen value $\tilde{\lambda}_{p}=\pi_{0}(1-\pi_{0}p)$. 
 Now we find the total variance as the sum of the eigenvalues of $\Sigma$:
 
 \begin{align*}
@@ -347,28 +360,48 @@ Var(X)  & = (1-\pi_{0}p)\pi_{0} + \pi_{0}(p-1) = \\
 And using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion less then 20%
 
 \begin{align*}
+ & \frac{\tilde{\lambda}_{p}}{Var(X)} <\frac{1}{5} \\
  &  \frac{{ \pi_{0} }(1-\pi_{0}p)}{{ \pi_{0} }p(1-\pi_{0}) } < \frac{1}{5} \quad 0 < \pi_{0}< \frac{1}{p} \\
  & \frac{(1-\pi_{0}p)}{p(1-\pi_{0})}-\frac{1}{5}<0 \\
  & \frac{5\pi(1-\pi_{0}p)-\pi_{0}p(1-\pi_{0})}{5\pi_{0}p(1-\pi)}<0  \\
  & \frac{5\pi_{0}-5\pi_{0}^{2}p-\pi_{0}p+\pi_{0}^{2}p}{5\pi_{0}p(1-\pi_{0})}<0 \\
- & \frac{-\pi_{0}^{2}-\pi_{0}p+5\pi_{0}}{5\pi_{0}p(1-\pi_{0})}<0 \\
+ & \frac{-\pi_{0}^{2}-\pi_{0}p+5\pi_{0}}{5\pi_{0}p(1-\pi_{0})}< ^{3} 0 \\
 & \frac{{ \pi_{0} }p(-4\pi_{0}-1)+5\pi_{0}}{5{ \pi_{0} }p(1-\pi_{0})}<0 \\
  & p(-4\pi_{0}-1 )+5< 0  \\
  & p> \frac{5}{4\pi_{0}+1}
 \end{align*}
 
+(3) The denominator is always greater than 0.
 
 
-If we want to get rid on the dependence on $\pi_{0}$ and get a lower bound we ought to analyze the worst case scenario that is when the first (p-1) explain little variance hence $\pi_{0}$ is close to zero and since the sum has to be one the last would assume the greatest value possible.
-Now if we let  $\pi_{0} \to 0$ we get a lower bound not depending on $\pi_{0}$ which is the following: 
+We want to eliminate the dependence on $\pi_0$ in the previous inequality, so as to find a lower bound for p. To do so, we consider the worst case scenario in which the first $p-1$ principal components contribute as little as possible to the total explained variance, thus forcing the last principal component to assume the greatest value possible (i.e. when $\pi_{0}\to {0}$). Mathematically we can prove it by showing the the function $f(\pi_{0})= \frac{\pi_{0}(1-p\pi_{0})}{\pi_{0}p(1-\pi_{0})}$ is decreasing in its domain $\left( 0, \frac{1}{p} \right)$
+
+\begin{align}
+f'(\pi_{0}) & = \frac{-p(p(1-\pi_{0}))-(1-\pi_{0}\pi)(-p)}{(p(1-\pi_{0}) )^{2}} \\
+ & =\dots \\
+ & =\frac{(1-p)}{p(1-\pi_{0})^{2}} <0 \iff p  >1
+\end{align}
+
+
+
+In that limiting case, we obtain a simple lower bound that no longer depends on $\pi_{0}$.
+
 $$
-p> \frac{5}{\underbrace{ 4\pi_{0} }_{ 0 }+1} =5
+p > \frac{5}{4\pi_{0}+1} \underset{\pi_{0}\to_{0}}{\rightarrow} 5
 $$
 
 ## Point 4
-**Perform a simulation study with $p = 3$, $\pi_0 = 1/4$ and $N = 1000$ Monte Carlo samples of $n = 100$ multinomially distributed $Y_i$. For $X = (X_1, X_2, X_3)$, make a scatterplot of the $N$ values of $X_2$ vs $X_1$ and sketch the ellipse corresponding to the contour of the (theoretical limiting) bivariate density of $(X_1, X_2)$ which contains 95\% probability.**
+Perform a simulation study with $p = 3$, $\pi_0 = 1/4$ and $N = 1000$ Monte Carlo samples of $n = 100$ multinomially distributed $Y_i$. For $X = (X_1, X_2, X_3)$, make a scatterplot of the $N$ values of $X_2$ vs $X_1$ and sketch the ellipse corresponding to the contour of the (theoretical limiting) bivariate density of $(X_1, X_2)$ which contains 95\% probability.
+
 ```{r echo=FALSE , results='hide', message=FALSE, warning=FALSE}
+rm(list = ls())
+library(GGally)
 library(tidyverse)
+library(corrplot)
+library(factoextra)
+library(plotly)
+library(MASS)
+library(latex2exp)
 library(ellipse)
 ```
 
@@ -401,49 +434,50 @@ X <- norm_sample[,1:3]
 
 
 ```
-We then pick the first 3 columns to get X, we plot the first two, and draw the countor line for the theoretical bivariate distribution parameterized as such $\mathcal{N}_{2}\left( \underline{0}, \begin{bmatrix}\frac{3}{16}& -\frac{1}{16}  \\ -\frac{1}{16}& \frac{3}{16}\end{bmatrix} \right)$
+We then pick the first 3 columns to get X, we plot the first two, and draw the contour line for the theoretical bivariate distribution parameterized as such $\mathcal{N}_{2}\left( \underline{0}, \begin{bmatrix}\frac{3}{16}& -\frac{1}{16}  \\ -\frac{1}{16}& \frac{3}{16}\end{bmatrix} \right).$ 
 
-
+Furthermore we compute the eigenvectors and we use them to find the axes (using this formula $c\sqrt{ \tilde{\lambda} _{j}e_{j} }$), of the theoretical ellipse which follows the expression $(x-\mu)^{T}\Sigma^{-1}(x-\mu)=c^{2}$ where $c=F_{\chi^{2}_{2}}(0.95)$. 
 
 ```{r}
 Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
 sigma.e <- eigen(Sigma)
-#eigen vectors
+#eigenvectors
 P <- sigma.e$vectors
+#eigenvalues
 lambda <- sigma.e$values
 mu <- c(0,0)
 e1 <- P[,1]
 e2 <- P[,2]
+# Direction of the first eigenvector
 b <- e1[2]/e1[1]
 a <- b*mu[1]+ mu[2]
+# Direction of the second eigenvector
 b2 <- e2[2]/e2[1]
 a2 <- b2*mu[1]+ mu[2]
-```
-
-```{r}
 cc<-sqrt(qchisq(0.95, 2))
-
+# Points touched by eigenvectors
 x<-cbind(cc*sqrt(lambda[1])*e1+mu,
          -cc*sqrt(lambda[1])*e1+mu,
          cc*sqrt(lambda[2])*e2+mu,
          -cc*sqrt(lambda[2])*e2+mu)
 ```
 
+
+
 ```{r}
-mu = c(0,0)
-Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
-Cor = matrix( c(1 , -1/3, -1/3,1) ,nrow=2 , ncol=2)
-plot(X[,1],X[,2], xlab="X1", ylab = "X2", main="Scatterplot X2 vs X1",
-  , asp=1)
+plot(X[,1],X[,2], xlab=expression(X[1]), ylab = expression(X[2]), 
+     main=expression("Scatterplot of"~ X[2] ~ "vs"~ X[1]), asp= 1 )
 lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5)
+# Direction of the first and second axes
 abline(a = a , b=b)
 abline(a= a2, b=b2)
 abline(h=0,v=0)
-arrows(x[1,1],x[2,1],x[1,2],x[2,2],code=2,col="brown",lwd=3)
-arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="brown",lwd=3)
+arrows(x[1,1],x[2,1],x[1,2],x[2,2],code=2,col="deepskyblue",lwd=3)
+arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="deepskyblue",lwd=3)
 ```
+As we can see from the plot above our simulated point fit perfectly in the theoretical ellipse, which is a strong indication that our simulation process is correct. The ellipse is also tilted to the left because the correlation between the two variable is negative, further the observations have equal spread for both the $X_1$ $X_2$ variables (since the variance is equal).
 
-
+We also decide to sample directly from a multinational distribution and we obtain very similiar results.
 
 ```{r}
 set.seed(4567) 
@@ -454,39 +488,27 @@ for (i in (1:N)){
   norm_samplev2[i,]<-(M/n - pi_0)*sqrt(n)
 }
 Xv2 <- norm_samplev2[,1:3]
-mu = c(0,0)
-Sigma = matrix( c(3/16 , -1/16, -1/16,3/16) ,nrow=2 , ncol=2)
-plot(Xv2[,1],Xv2[,2], xlab="X1", ylab = "X2", main="Scatterplot X2 vs X1", asp=1)
+plot(Xv2[,1],Xv2[,2], xlab=expression(X[1]), ylab = expression(X[2]), 
+     main=expression("Scatterplot of"~ X[2] ~ "vs"~ X[1]), asp= 1 )
 lines(ellipse(x=Sigma,centre=mu,level=0.95),col="red",lwd=1.5,asp=1)
 abline(a = a , b=b)
 abline(a= a2, b=b2)
 abline(h=0,v=0)
-points(x[1,],x[2,],pch=21,bg="brown")
-arrows(x[1,1],x[2,1],x[1,2],x[2,2],code=2,col="brown",lwd=3)
-arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="brown",lwd=3)
-```
-```{r}
-set.seed(4567) 
-
-M<-rmultinom(N,size=n,prob=c(1/4,1/4,1/4,1/4)) / n 
-norm_samplev2<-(M/n - pi_0)*sqrt(n)
-cor(norm_sample)
+arrows(x[1,1],x[2,1],x[1,2],x[2,2],code=2,col="deepskyblue",lwd=3)
+arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="deepskyblue",lwd=3)
 ```
 
 
 
 ## Point 5
-**Find the conditional distributions of $(X_1, X_2) \mid X_3 = x_3$ and of $X_3 \mid (X_1 = x_1, X_2 = x_2)$.**
+Find the conditional distributions of $(X_1, X_2) \mid X_3 = x_3$ and of $X_3 \mid (X_1 = x_1, X_2 = x_2)$.
 
 Given a Gaussian random vector we know that conditioning on it the conditioned vector is still Gaussian with parameters : 
-
 \begin{align*}
 \overline{\mu} &= \mu_1 + \Sigma_{12}\Sigma_{22}^{-1}(a-\mu_2)  \\
 \overline{\Sigma}&= \Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}  
 \end{align*}
 
-  
- 
 We know that $(X_{1},X_{2},X_{3}) \sim \mathcal{N}_3(\underline{0}, \Sigma)$ where  
 
 $$
@@ -577,12 +599,12 @@ $$
 \end{bmatrix}\right).
 $$
 5.2
-We now have to find the gaussian random variable:
+We now have to find the Gaussian random variable:
 $$
 X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}_{1} ( \mu_{3|12}, \Sigma _{3|12}).
 $$
 
-Now we get the mean:
+We get the mean:
 
 \begin{align*}
 \mu_{3|1,2}  & = \mu_{3}+\Sigma_{12}\Sigma _{11}^{-1}\begin{pmatrix}
@@ -616,7 +638,7 @@ x_{2}
 \end{align*}
 
 
-And variance:
+And the variance:
 
 \begin{align*}
 \Sigma _{3|12} & = \Sigma_{22} -\Sigma _{21}\Sigma _{11}^{-1}\Sigma _{12}  \\
@@ -643,3 +665,491 @@ So at the end:
 $$
 X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}\left( -\frac{1}{2}x_{1}-\frac{1}{2}x_{2}, \frac{1}{8} \right)
 $$
+\newpage
+
+# Exercise 2
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+The Boston data contains housing values in 506 suburbs of Boston. 
+We will work with all variables ad except for zn, chas, rad and medv. 
+```{r}
+X<-Boston[,-c(2,4,9,14)] 
+head(X)
+```
+Let's start by analyzing the variables presented here:
+
+- **crime**: represents the per capita crime rate by town  
+- **indus**: represents the proportion of non-retail business acres per town  
+- **nox**: represents the concentration of nitrogen oxides (parts per 10 million)  
+- **rm**: represents the average number of rooms per dwelling  
+- **age**: represents the proportion of owner-occupied units built prior to 1940  
+- **dis**: represents the weighted distances to five Boston employment centers  
+- **tax**: represents the property tax rate per $10,000  
+- **ptratio**: represents the pupil-teacher ratio by town  
+- **black**: represents \( 1000(B - 0.63)^2 \), where *B* is the proportion of Black residents by town  
+
+
+\vspace{0.3cm}
+## Point 1
+Compute the correlation matrix R and comment on the largest 4 correlations.
+
+With the following code we plot the correlation matrix of our dataset.
+```{r}
+R = cor(X)
+
+col_inv = colorRampPalette(c("darkcyan", "white", "firebrick"))(300)
+
+corrplot(R, col = col_inv, method = "number",type="lower",tl.col	= "black", 
+         title = "Correlation Table",number.cex	=0.75,  mar = c(0,0,1,0)  
+
+)
+```
+
+We immediately see that the data exhibit a noticeable dependence structure, as evidenced by the above correlation matrix, which shows moderately high correlation (both positive and negative) among the variables in the dataset.
+
+
+Let's now find, with the following code, the 4 largest correlations.
+
+```{r}
+p= ncol(X)
+
+b =  sort(abs(R[lower.tri(R)]), decreasing = T)[1:4]
+indices = (matrix( abs(R) %in% b , ncol=p ) & lower.tri(R)) %>% which(arr.ind = TRUE)
+
+
+result_table = tibble(
+  Variable1 = rownames(R)[indices[, 1]],
+  Variable2 = rownames(R)[indices[, 2]],
+  Correlation = R[indices]
+)
+
+print(result_table)
+```
+
+The variable *nox* quantifies the concentration of nitrogen oxides (measured in parts per 10 million), while the variable *indus* represents the proportion of non-retail business acres per town. Correlation is an index ranging from -1 to 1, where -1 indicates an inverse correlation, meaning that high values of one variable correspond to low values of the other, and vice versa while values close to 1 indicate a perfect linear correlation. As expected, there is a positive correlation between *nox* and *indus*, since highly industrialized areas tend to emit more nitrogen oxides that are a common byproduct of industrial activities (e.g. all combustion processes).
+
+The variable *age* describes the proportion of owner-occupied units built before 1940. A strong correlation with *nox* is therefore unsurprising. Focusing specifically on residential buildings, older houses are expected to have higher emissions, leading to an increased concentration of nitrogen oxides in those areas.
+
+The variable *dis* represents the weighted mean distance to five major employment centers in Boston. It is reasonable to expect that is negatively correlated with the variable *nox* beacause  areas farther from Boston are more rural and generally experience lower pollution levels.
+
+Finally, a correlation is observed between the *age* of buildings and their distance from the city center (*dis*). The closer a neighborhood is to Boston, the more likely it is to contain older buildings. This phenomenon can be explained by the city's historical expansion: Boston likely grew outward from an initial urban core, where older houses were originally built, with newer constructions developing over time as the city expanded.
+
+
+\vspace{0.1in}
+## Point 2
+Identify the 3 most extreme univariate outliers.
+
+First, we present a boxplot to visualize the distribution of each variable and identify potential outliers. The variables are plotted on their original scales, without standardization, to allow for first  look of their individual behavior, since they naturally operate on different scales.
+```{r} 
+df_long <- X %>%
+  pivot_longer(cols = everything(),
+               names_to = "Variabile",
+               values_to = "Valore")
+
+ggplot(df_long, aes(x = 1, y = Valore)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", 
+               outlier.colour = "black", outlier.shape = 16, outlier.size = 0.8) +
+  facet_wrap(~ Variabile, scales = "free_y", ncol = 5, nrow = 2) +
+  labs(title= "Box Plot of All Variables", y = "Values", x="") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+
+```
+
+From the boxplot above, we observe that some variables are more prone to outliers than others. This is particularly evident in variables such as *black*, *crime*, and *rm*, compared to variables like *age*, *indus*, *nox*, and *tax*, which seem to exhibit fewer atypical behaviors.
+
+We now consider the standardized data, so that all variables share the same scale, allowing for a single comparable visualization.
+```{r} 
+X_scaled = as.data.frame(scale(X))
+df_long <- X_scaled %>%
+  pivot_longer(cols = everything(), names_to = "Variabile", values_to = "Valore")
+
+ggplot(df_long, aes(x = Variabile, y = Valore)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.colour = "black", 
+               outlier.shape = 16, outlier.size = 0.8) +
+  coord_cartesian(ylim = c(-5, max(df_long$Valore))) +  
+  labs(title = "Boxplot of Standardized Variables", x="",  y = "Values") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+This graph confirms that the variables *black*, *crime*, and *rm* have more outliers.
+
+Additionally, some outliers deviate significantly from the mean. 
+We now proceed to identify the three most extreme univariate outliers.
+
+The following code compute for each variable the univariate distance (using the absolute value) of each observation from the corresponding column mean, and then stores in a separate dataframe the variable name and the index line of the three most extreme univariate outliers.
+```{r}
+k = 3
+Outliers =  data.frame(outliers = c("max_outlier1", "max_outlier2", "max_outlier3"), 
+                       col_name = c(0,0,0), 
+                       row_index = c(0,0,0), 
+                       row.names = 1)
+
+maxoutliers = rep(0, k)
+X_dist = abs(X_scaled)
+
+for (i in (1:p)) {
+  sorted = sort(X_dist[,i], decreasing = T, index.return = T)
+  for (j in (1:k)) {
+    if (sorted$x[j] > maxoutliers[j]) {
+      maxoutliers[j] = sorted$x[j]
+      Outliers[j,1] =  names(X)[i]
+      Outliers[j,2] =  sorted$ix[j]
+    }
+  }
+}
+
+Outliers
+```
+
+As we see from the above output, the three most extreme univariate outliers are all in the *crim* variable. 
+This naturally raises the question of the behavior of crime. 
+To investigate further, we create a QQ plot to assess whether the crime variable can be approximated by a normal distribution.
+We compute the empirical quantiles and compare them with the theoretical quantiles of the normal distribution.
+For the data to be normally distributed, the points should closely follow the red line, which would indicate a good approximation to the normal distribution.
+
+```{r}
+scaled_crim = X_scaled$crim
+scaled_crim_df = as.data.frame(x = scaled_crim)
+
+qq_data <- as.data.frame(qqnorm(scaled_crim, plot.it = FALSE))
+names(qq_data) <- c("theoretical", "sample")  
+
+qq_data$index <- 1:nrow(qq_data)
+
+qq_data$color <- ifelse(qq_data$index %in% Outliers[,2], "red", "blue")
+
+y_quantiles = quantile(scaled_crim, probs = c(0.25, 0.75)) 
+x_quantiles = qnorm(c(0.25, 0.75))
+
+slope = diff(y_quantiles) / diff(x_quantiles)
+intercept = y_quantiles[1] - slope * x_quantiles[1]
+
+ggplot(qq_data, aes(x = theoretical, y = sample)) +
+  geom_point(aes(color = color)) +
+  geom_abline(slope = slope, 
+              intercept = intercept, color = "red", linetype ="dashed") + 
+  scale_color_identity() + 
+  theme_minimal()+
+  labs(title = "Q-Q Plot of Scaled Crime", 
+       x = "Theoretical Quantiles", y = "Sample Quantiles")
+```
+
+We can observe from the plot that the distribution of *crim* does not follow a perfectly normal pattern. 
+In particular, the previously identified outliers stand out significantly.
+So we can conclude saying that the variable *crim* has the three most univariate outliers indicating that the crime rate distribution has extremly high values for some neighborhoods.
+
+
+\vspace{0.1in}
+## Point 3
+Construct a chi-square Q-Q plot of the squared Mahalanobis distances and comment about normality.
+
+Mahalanobis distance measures how "unusual" a point is compared to a group of data, considering not only its distance from the mean but also how the variables are distributed and correlated with each other.
+With the following code, we construct the chi-square Q-Q plot of the squared Mahalanobis distances of our data. 
+
+```{r}
+n <- nrow(X_scaled)  
+bar.x<-colMeans(X_scaled)
+S = cov(X_scaled) 
+
+d <- mahalanobis(X_scaled, center = bar.x, cov = S)
+
+chi2_quantiles <- qchisq(ppoints(d), df = p)
+
+sorted_d <- sort(d)
+
+ggplot(cbind(chi2_quantiles, sorted_d), aes(x = chi2_quantiles, y = sorted_d)) +
+  geom_point( color = "blue", size = 1) + 
+  geom_abline(slope = 1, intercept = 0, color = "red") + 
+  theme_minimal() +
+  labs(title = "Q-Q plot of the Malahnobis Distances", x = "Chi-squared quantiles", 
+       y = "Sorted Mahalanobis Distances") 
+```
+
+As we can see from the above figure, there seem to be several points deviating above the theoretical quantile line on the right-hand side. This pattern suggests the presence of heavier tails in the empirical distribution compared to the theoretical chi-square distribution, indicating a departure from multivariate normality. 
+In particular, some observations may be considered outliers with respect to the multivariate normal model.
+
+Let's verify it better with the $T^2$ chart with the two levels $0.95$ and $0.99$.
+```{r}
+ggplot(data = cbind(index = 1:n, d), aes(x = index, y = d)) +
+  geom_point(color = "blue", size = 0.7) +  
+  geom_hline(yintercept = qchisq(0.95,df=p), lty = 2, color = "red") + 
+  geom_hline(yintercept = qchisq(0.99,df=p), lty = 2, color = "red") + 
+  theme_minimal() +
+  labs(title = expression(T^2~" Chart"), x = "Index", y = "Mahalanobis distances") 
+```
+
+The $T^2$ chart above reveals that a substantial number of observations (over 30 out of approximately 500) lie above the 0.99 threshold. 
+Under the assumption of multivariate normality, one would expect around 1% of the observations (roughly 5 out of 500) to exceed this limit. The presence of a disproportionately large number of such points suggests the existence of potential outliers or a deviation from the multivariate normal model.
+
+The following script counts the number of observations which exceed the $0.99$ level in the $T^2$ chart.
+```{r}
+alpha = 0.99
+quant = qchisq(alpha,df=p)
+extreme_obs = 0
+
+for (i in 1:n ) {
+  if(d[i] > quant){
+    extreme_obs = extreme_obs +1
+  }
+}
+extreme_obs
+```
+
+
+
+\vspace{0.1in}
+## Point 4
+Are the univariate outliers identified in point 2. also multivariate outliers? Justify your answer.
+
+In order to verify if the observations corresponding to the univariate outliers found in point 2 are also multivariate outliers, let's first visualize them in the boxplot figure presented before.
+```{r}
+df_long = X_scaled %>%
+  mutate(Riga = row_number()) %>%  
+  pivot_longer(cols = -Riga, names_to = "Variabile", values_to = "Valore") 
+
+d = df_long %>% 
+  filter(Riga == Outliers[1,2] | Riga == Outliers[2,2] | Riga == Outliers[3,2] )
+
+ggplot(df_long, aes(x = Variabile, y = Valore)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.colour = "black",
+               outlier.shape = 16, outlier.size = 0.5) +  
+  geom_point(data = d, aes(x = Variabile, y = Valore), 
+             color = "red", size = 1) +
+  coord_cartesian(ylim = c(-4, max(df_long$Valore))) +  
+  labs(title = "Boxplot of Standardized Variables", x = "", y = "values") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")  
+```
+
+In the above figure we colored in red the values (for each variables) of the three observations which correspond to the univariate outliers found before.
+
+As we can see, the values of those observations in the variables which are not *crim* are almost always near the corresponding boxes (which represents the range 1-3 quartile) and therefore not so extreme.
+
+On the other hand, we also need to take in consideration the structure of dependencies of our data in order to say (with confidence) that our univariate outliers are also multivariate outliers. 
+
+To do that, let's see the positions of those outlier in the chi-square Q-Q plot of the squared Mahalanobis distances. 
+```{r}
+r_names_out = as.character(Outliers[,2])
+
+ggplot(cbind(chi2_quantiles, sorted_d), aes(x = chi2_quantiles, y = sorted_d)) +
+  geom_point( color = "blue", size = 1) + 
+  geom_point(data = cbind(chi2_quantiles, sorted_d)[r_names_out,], 
+             aes(x = chi2_quantiles, y=sorted_d),color = "red", size = 1) + 
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  theme_minimal()+
+  labs(title = "Q-Q Plot of the Malahnobis Distance", 
+       x = "Chi-squared quantiles", y = "Sorted Mahalanobis Distances") 
+```
+
+As we can see, the outliers that we found before are also clearly multivariate outliers, since they corresponds to the three observations with the highest Mahalanobis distances.
+
+
+
+
+
+
+\vspace{0.1in}
+## Point 5
+
+Perform a principal component analysis on the standardized variables. Decide how many components to retain in order to achieve a satisfactory lower-dimensional representation of the data. Justify your answer.
+
+
+With the following code we perform the PCA on our standardized dataset. 
+Furthermore we also print, for each principal component, it's own standard deviation, proportion and cumulative proportion of explained variability.
+```{r}
+pca = prcomp(X, center = T, scale. = T)
+summary(pca)
+```
+
+To decide how many components to retain there is not a precise criteria, but there exist some "rules of thumb" which may help in the decision process.
+
+One method consist in taking the components which (together) explains the $70-80\%$ of the total variability of the data. As we can see from the third row of the summary of our PCA, the first 3 components explains (more or less) the 73% of the total variability of the original data and therefore they seem enough to achieve a satisfactory lower-dimensional representation. We could also take the first 4 components, which in total would explain the 80% of the total variability, in order to have an even more accurate representation, but in this way we would loose the possibility to visualize graphically the results of the PCA.
+
+The second method consists in the construction of the so-called "screeplot", which would indicate the number of components to retain in correspondence of the "elbow".
+```{r}
+fviz_eig(pca, xlab = "PC", ylab = "% of explained variance")+
+  geom_vline(xintercept = 2, linetype = "dashed", color = "red")
+```
+
+As we can see from the above figure, this second method would advise us to retain just the first two components, since the "elbow" appears in corrispondence of the second eigenvalue.
+On the other hand, since the first two explain only the 63% of the total variability, we still think it would be better to retain the first three components.
+
+
+The third method consists in taking all the components with an eigenvalue greater or equal than one. 
+Let's then print the eigenvalues of our principal components.
+```{r}
+pca$sdev^2
+```
+
+As we can see, the eigenvalues of the first three PC are all $\geq 1$ (the third one is almost equal to one) so this method tells us to retain the first three PC for a good lower-dimensional representation.
+
+In conclusion, considering all the three method, it would be advisable to chose the first three components, that strike a balance between a good reduction of dimensional while still explaining a great amount of variability.
+
+## Point 6
+\vspace{0.1in}
+Interpret the first 3 principal components by selecting for each principal component the variables with correlation greater (in absolute value) than 0.4 with that principal component.
+
+In order to interpret properly the first 3 PC we have to look at their correlations with our original variables. 
+```{r}
+corr_CP = cor(X_scaled, pca$x[,1:3])
+corr_CP = cbind(corr_CP, Explained_var = apply(corr_CP^2, 1, sum) )
+
+
+round(corr_CP, 3) 
+```
+
+The first 3 columns of the above output shows the correlation of each original variable with the first 3 PC. 
+
+The fourth column shows instead the proportion of variability of each variable explained by the first 3 PC. 
+As we can see, there is only one variable (ptratio) whose explained variability is under the 0.6 (probably because it has low correlation with the other variables), and this confirm the fact that the first 3 PCs achieve a satisfactory lower-dimensional representation of our data.
+
+As we can see from the table, the first PC has a high correlation (in module greater than 0.4) with all the 10 original variables (it is not so strange since it explains alone more than the 50% of the total variability of our data). 
+
+A pratical interpretation of the first principal component is that the PC1 is a general quality indicator (the lower the better) of the considered housing. 
+In particular, an observation with a high PC1 score generally indicates an industrial area, leading to significant pollution levels. Additionally, such areas are subject to high property tax burdens, consist predominantly of old buildings, and are characterized by elevated crime rates. The population primarily comprises low-income residents, and the neighborhood often suffers from a shortage of qualified teachers. 
+These areas are also typically far from major employment districts, have low presence of black communities and are characterized by smaller housing units.
+
+\vspace{0.1in}
+The second component has high positive correlation with the variable *ptratio* and a high negative correlation with  the variable *rm* (the lower the better).
+Thus, we can interpret the second principal component as quality of housing and schooling indicator for an area since richer area will have more room per dwelling and more teacher for each pupil. 
+For instance, an observation with a high score of PC2 corresponds in general to an area characterized by relatively small houses and with shortage of teachers.
+
+\vspace{0.1in}
+The third principal component has a high positive correlation with the variable *black* and a significant negative correlation with *crim* (the higher the better). 
+Therefore, we can think of PC3 as an indicator of areas with a high black population and with a low crime rate.
+So, an observation with high score in the third component is generally represented by a multicultural area with low rate of criminality. 
+
+We can also extract those variable with a high correlation with each PC with the following code.
+```{r}
+corr_CP = cor(X_scaled, pca$x[,1:3])
+result = apply(corr_CP, 2, function(col) rownames(corr_CP)[abs(col) > 0.4])
+
+# Print the results
+print(result)
+```
+
+Furthermore we show the boxplot of the three principal components, and as we can predict from the theory the variance of each components goes down (since they explain less variance). We also notice that the first principal component has no univariate outlier, but we can see the second has a few, to be more specific we can interpret the negative outliers as the rich part of the city while the positive ones represent the poorer parts. The third also has a few outliers in particular we can interpret the positive outlier as the more diverse and/or safer part of town, while the negative ones the more segregated and/or more dangerous part of town.
+
+```{r}
+X <- tibble(as.data.frame(pca$x)[,1:3])
+
+df_long <- X %>%
+  pivot_longer(cols = everything(),
+               names_to = "Variabile",
+               values_to = "Valore")
+
+ggplot(df_long, aes(x = Variabile, y = Valore)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.colour = "black", 
+               outlier.shape = 16, outlier.size = 0.8) +
+  coord_cartesian(ylim = c(-5, max(df_long$Valore))) +  
+  labs(title = "Boxplot of PCs", x="",  y = "Values") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+\vspace{0.1in}
+## Point 7
+Describe the 3 outliers identified in point 2. in terms of the first 3 principal components.
+
+To describe the three outliers identified in point (2) in terms of the first 3 PC we first look at the standardized values of those outliers for our original variables. 
+```{r}
+X_scaled[Outliers[,2],]
+```
+
+We immediately notice that all the three outliers exhibit a particularly high value in the variable *crim*, while the values for all the other variables are not particularly extreme.
+
+\vspace{0.05in}
+In order to give an interpretation of these outliers using the 3 PCs we print their score:
+```{r}
+pca_scores = as.data.frame(pca$x)
+pca_scores[Outliers[,2], 1:3]
+```
+So, as we can see in the output above, all the three outliers have simultaneously high PC1 score and low PC3 score.
+This suggests that the areas represented by the three outliers found before are probably the kind of areas with heavily industrialized areas with significant pollution levels with higher rate of criminality and generally lower black population. 
+
+PC2 is fairly average and from this we can deduce that such areas have average quality schooling and average quality home.
+
+Regarding PC3 we know that all of the three observations are also univariate outliers for PC3 .
+
+```{r}
+X[,3] %>%
+  ggplot(aes(y = PC3)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", 
+               outlier.colour = "black", outlier.shape = 16, outlier.size = 0.8) +
+  theme_minimal()
+```
+
+This is due to the fact that they are also an univariate outlier in the variable crime and the variable black doesn't compensate for it, so we know for certain that these areas aren't extremely diverse.
+
+\vspace{0.05in}
+With the following code we also created a 3D view of the graph defined by the first 3 PC, in which we highlighted in red the three outliers found before.
+```{r, eval = FALSE}
+outlier_pcs <- pca_scores[Outliers[,2], 1:3] 
+outlier_pcs$Index <- Outliers[,2]  
+
+plot_ly(data = pca_scores, x = ~PC1, y = ~PC2, z = ~PC3, 
+        type = "scatter3d", mode = "markers",
+        marker = list(size = 3, color = 'gray', opacity = 0.5)) %>%
+  add_trace(data = outlier_pcs, x = ~PC1, y = ~PC2, z = ~PC3, 
+            type = "scatter3d", mode = "markers+text",
+            marker = list(size = 6, color = 'red'),
+            text = ~Index,  
+            textposition = "top center") %>%
+  layout(title = "3D PCA Plot with Outliers Highlighted",
+         scene = list(xaxis = list(title = "PC1"),
+                      yaxis = list(title = "PC2"),
+                      zaxis = list(title = "PC3")))
+```
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{screen.png}
+    \caption*{3D PCA Plot with Outliers Highlighted}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
