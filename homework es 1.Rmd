@@ -1,11 +1,11 @@
 ---
 title: "Problem Set 1"
 author: |
-  Matteo Allegrini (423094)  
-  Leonardo Federico De Blasio (40293)  
-  Simone Maria Gervasoni (115376)  
-  Alice Leto (232032)  
-  Marinella Nigro (312312)
+  Matteo Allegrini (982027)  
+  Leonardo Federico De Blasio (974948)  
+  Simone Maria Gervasoni (1155376)  
+  Alice Leto (1166310)  
+  Marinella Nigro (950475)
 output:
   pdf_document:
     toc: true
@@ -22,7 +22,7 @@ for $\hat{\pi} = n^{-1} \sum_{i=1}^{n} Y_i$ and $\pi = (\pi_1, \ldots, \pi_{p+1}
 
 ## Point 1 
 
-What is the distribution of $X$? Justify your answer.
+*What is the distribution of $X$? Justify your answer.*
 
 Let $Y_{i}\in \{ 1,2,\dots,p \}$ $i =1,\dots,n$ with probability $\pi_{1},\dots,\pi _{p},\pi _{p+1}>0$ and $\sum_{j=1}^{p+1}\pi _{j}=1$; i.e.
 $$
@@ -75,7 +75,7 @@ Where the covariance matrix is:
 \right)
 \end{align*}
 
-If we take the first p components of a Gaussian vector of  dimension p+1 , it is still a Gaussian vectorr of dimension p in fact:
+If we take the first p components of a Gaussian vector of  dimension p+1 , it is still a Gaussian vector of dimension p in fact:
 $$
 (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\Omega)
 $$
@@ -85,7 +85,7 @@ $$
 * The element $\Omega _{p+1,p+1}=\underbrace{ \pi _{p+1} }_{ >0 }\underbrace{ (1-\pi _{p+1}) }_{  >^{(1)}\ 0}>0$
 (1) $1-\pi _{p+1}> 0\iff \pi _{p+1}<1$ and this is always true because $\pi _{p+1}$ is a probability that is defined $(0,1)$ .
 
-So we can say thatthe marginal distribution of the Gaussian vector of dimension p+1 is still a Gaussian:
+So we can say that the marginal distribution of the Gaussian vector of dimension p is still a Gaussian:
 $$
 (X_{1},\dots,X_{p})\sim \mathcal{N}_{p}(0,\Sigma)
 $$
@@ -104,7 +104,7 @@ $$
 
 ## Point 2
 
-Let $\Sigma$ be the $p \times p$ covariance matrix of $X$. Find the inverse of $\Sigma$.
+*Let $\Sigma$ be the $p \times p$ covariance matrix of $X$. Find the inverse of $\Sigma$.*
 
 We want to find the inverse of the covariance matrix:  
 $$  
@@ -149,7 +149,7 @@ $$
  &  &  & \pi _{p}
 \end{pmatrix}\right| = \pi_{1} \pi_{2}\dots \pi _{p} >0
 $$
-so it is invertible beacuse the determinant is bigger than 0 
+so it is invertible because the determinant is bigger than 0 
 
 To apply the **Lemma** we check that $1+ v^{T}A^{-1}u^{}\neq 0.$
 
@@ -238,7 +238,7 @@ A^{-1}uv^{T}A^{-1}  & = \underset{ p\times p }{ \begin{pmatrix}
 \end{align*}
 
 
-Now we can substitue the quantity above to find the inverse of the matrix $\Sigma$:
+Now we can substitute the quantity above to find the inverse of the matrix $\Sigma$:
 \begin{align*}
  \Sigma^{-1} &= A^{-1}-\begin{pmatrix}
 -\frac{1}{\pi _{p+1} }& \dots &- \frac{1}{\pi _{p+1} } \\
@@ -263,15 +263,12 @@ Now we can substitue the quantity above to find the inverse of the matrix $\Sigm
 \end{align*}
 
 ## Point 3
-Let $\pi = \left( \pi_0, \ldots, \pi_0,1-p\pi_{0} \right)$ for some $0 < \pi_0 < 1/p$. Find the eigenvalues of $\Sigma$. How large should $p$ be such that the proportion of variance explained by the last (population) principal component account for less than 20\% of total variation of $X$?
+*Let $\pi = \left( \pi_0, \ldots, \pi_0,1-p\pi_{0} \right)$ for some $0 < \pi_0 < 1/p$. Find the eigenvalues of $\Sigma$. How large should $p$ be such that the proportion of variance explained by the last (population) principal component account for less than 20\% of total variation of $X$?*
 
 3.1 Find the eigenvalues $\Sigma$
 
 \begin{align*}
 \Sigma &  =diag(\lambda_{1},\dots,\lambda _{n}) - \pi_{0}\pi^{T} \\
- & =\pi_{0}\begin{pmatrix}1 &  &  & \\  & 1 & &  \\ &  & \ddots  &   \\  &  &  &  1\end{pmatrix}  
- + \pi_{0}^{2}\underbrace{ \begin{pmatrix}-1 & -1 & \dots & -1 \\ -1 & -1 & \dots & -1  \\ \vdots  & \vdots & \vdots & \vdots \\ -1 & -1 & \dots & -1  \end{pmatrix} }_{ J_{p} } \\
- & =\pi_{0}I_{p}+\pi_{0}^{2}J_{p} \\
  & =\pi_{0}I_{p}-\pi_{0}^{2}A
 \end{align*}
 
@@ -298,9 +295,9 @@ Let $A\in \mathbb{R}^{n\times n}$ be real and symmetric. Then
 
 2. $A$ is diagonalizable.
 
-3. There is an orthonormal basis of $\mathbb{R}^{n}$ consiting on the eigenvectors of $A$.
+3. There is an orthonormal basis of $\mathbb{R}^{n}$ consisting on the eigenvectors of $A$.
 
-In short, $A$ may be orthonormaly diagonalized: $A=VDV^{T}$ where $V\in \mathbb{R}^{n\times n}$ is an orthonormal matrix of eigenvectors of $A$ and $D$ is a real diagonal matrix of eigenvalues of $A$.
+In short, $A$ may be orthonormally diagonalized: $A=VDV^{T}$ where $V\in \mathbb{R}^{n\times n}$ is an orthonormal matrix of eigenvectors of $A$ and $D$ is a real diagonal matrix of eigenvalues of $A$.
 
 So by the **Spectral Theorem** we can say that $\exists Q\in \mathbb{R}^{p\times p}$ orthonormal matrix such that $A=QDQ^{T}$ where $D=\begin{pmatrix}p & 0 & \dots & 0 \\ 0 & 0 & \dots  & 0 \\ \vdots&  & \ddots  & \vdots \\ 0 & 0 &\dots & 0\end{pmatrix}$ .
 
@@ -357,7 +354,7 @@ Var(X)  & = (1-\pi_{0}p)\pi_{0} + \pi_{0}(p-1) = \\
 \end{align*}
 
 
-And using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion less then 20%
+And using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion less than 20%
 
 \begin{align*}
  & \frac{\tilde{\lambda}_{p}}{Var(X)} <\frac{1}{5} \\
@@ -374,7 +371,7 @@ And using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion
 (3) The denominator is always greater than 0.
 
 
-We want to eliminate the dependence on $\pi_0$ in the previous inequality, so as to find a lower bound for p. To do so, we consider the worst case scenario in which the first $p-1$ principal components contribute as little as possible to the total explained variance, thus forcing the last principal component to assume the greatest value possible (i.e. when $\pi_{0}\to {0}$). Mathematically we can prove it by showing the the function $f(\pi_{0})= \frac{\pi_{0}(1-p\pi_{0})}{\pi_{0}p(1-\pi_{0})}$ is decreasing in its domain $\left( 0, \frac{1}{p} \right)$
+We want to eliminate the dependence on $\pi_0$ in the previous inequality, so as to find a lower bound for p. To do so, we consider the worst case scenario in which the first $p-1$ principal components contribute as little as possible to the total explained variance, thus forcing the last principal component to assume the greatest value possible (i.e. when $\pi_{0}\to {0}$). Mathematically we can prove it by showing the function $f(\pi_{0})= \frac{\pi_{0}(1-p\pi_{0})}{\pi_{0}p(1-\pi_{0})}$ is decreasing in its domain $\left( 0, \frac{1}{p} \right)$
 
 \begin{align}
 f'(\pi_{0}) & = \frac{-p(p(1-\pi_{0}))-(1-\pi_{0}\pi)(-p)}{(p(1-\pi_{0}) )^{2}} \\
@@ -418,7 +415,7 @@ n= 100
 
 norm_sample<- matrix(NA, nrow=N, ncol=4)
 for (i in (1:N)){
-  # Matrix nx4 for codified vector inizialed as full of NAs
+  # Matrix nx4 for codified vector initialized as full of NAs
   Y_hot_i = matrix(NA, nrow=n, ncol=4) 
   # Samples from a uniform discrete (not yet codified)
   Y_i = sample(4,n,replace =T)  
@@ -475,9 +472,9 @@ abline(h=0,v=0)
 arrows(x[1,1],x[2,1],x[1,2],x[2,2],code=2,col="deepskyblue",lwd=3)
 arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="deepskyblue",lwd=3)
 ```
-As we can see from the plot above our simulated point fit perfectly in the theoretical ellipse, which is a strong indication that our simulation process is correct. The ellipse is also tilted to the left because the correlation between the two variable is negative, further the observations have equal spread for both the $X_1$ $X_2$ variables (since the variance is equal).
+As we can see from the plot above our simulated point fit perfectly in the theoretical ellipse, which is a strong indication that our simulation process is correct. The ellipse is also tilted to the left because the correlation between the two variable is negative, further the observations have equal spread for both the $X_1$ $X_2$ variables (since variances are equal).
 
-We also decide to sample directly from a multinational distribution and we obtain very similiar results.
+We also decide to sample directly from a multinational distribution and we obtain similar results.
 
 ```{r}
 set.seed(4567) 
@@ -588,7 +585,7 @@ The mean vector is:
 \end{align*}
 
 
-So a the end 
+So at the end 
 $$
 (X_{1},X_{2})|X_{3}=x_{3} \sim \mathcal{N}_{2}\left( \begin{bmatrix}
 -\frac{1}{3}x_{3} \\
@@ -667,6 +664,7 @@ X_{3}|(X_{1}=x_{1},X_{2}=x_{2}) \sim \mathcal{N}\left( -\frac{1}{2}x_{1}-\frac{1
 $$
 \newpage
 
+
 # Exercise 2
 
 ```{r setup, include=FALSE}
@@ -730,20 +728,20 @@ result_table = tibble(
 print(result_table)
 ```
 
-The variable *nox* quantifies the concentration of nitrogen oxides (measured in parts per 10 million), while the variable *indus* represents the proportion of non-retail business acres per town. Correlation is an index ranging from -1 to 1, where -1 indicates an inverse correlation, meaning that high values of one variable correspond to low values of the other, and vice versa while values close to 1 indicate a perfect linear correlation. As expected, there is a positive correlation between *nox* and *indus*, since highly industrialized areas tend to emit more nitrogen oxides that are a common byproduct of industrial activities (e.g. all combustion processes).
+The variable *nox* quantifies the concentration of nitrogen oxides (measured in parts per 10 million), while the variable *indus* represents the proportion of non-retail business acres per town. Correlation is an index ranging from -1 to 1, where -1 indicates an inverse correlation, meaning that high values of one variable correspond to low values of the other, and vice-versa while values close to 1 indicate a perfect linear correlation. As expected, there is a positive correlation between *nox* and *indus*, since highly industrialized areas tend to emit more nitrogen oxides that are a common byproduct of industrial activities (e.g. all combustion processes).
 
 The variable *age* describes the proportion of owner-occupied units built before 1940. A strong correlation with *nox* is therefore unsurprising. Focusing specifically on residential buildings, older houses are expected to have higher emissions, leading to an increased concentration of nitrogen oxides in those areas.
 
-The variable *dis* represents the weighted mean distance to five major employment centers in Boston. It is reasonable to expect that is negatively correlated with the variable *nox* beacause  areas farther from Boston are more rural and generally experience lower pollution levels.
+The variable *dis* represents the weighted mean distance to five major employment centers in Boston. It is reasonable to expect that is negatively correlated with the variable *nox* because  areas farther from Boston are more rural and generally experience lower pollution levels.
 
-Finally, a correlation is observed between the *age* of buildings and their distance from the city center (*dis*). The closer a neighborhood is to Boston, the more likely it is to contain older buildings. This phenomenon can be explained by the city's historical expansion: Boston likely grew outward from an initial urban core, where older houses were originally built, with newer constructions developing over time as the city expanded.
+Finally, a correlation is observed between the *age* of buildings and their distance from the city center (*dis*). The closer a neighbourhood is to Boston, the more likely it is to contain older buildings. This phenomenon can be explained by the city's historical expansion: Boston likely grew outward from an initial urban core, where older houses were originally built, with newer constructions developing over time as the city expanded.
 
 
 \vspace{0.1in}
 ## Point 2
 Identify the 3 most extreme univariate outliers.
 
-First, we present a boxplot to visualize the distribution of each variable and identify potential outliers. The variables are plotted on their original scales, without standardization, to allow for first  look of their individual behavior, since they naturally operate on different scales.
+First, we present a boxplot to visualize the distribution of each variable and identify potential outliers. The variables are plotted on their original scales, without standardization, to allow for first  look of their individual behaviour, since they naturally operate on different scales.
 ```{r} 
 df_long <- X %>%
   pivot_longer(cols = everything(),
@@ -763,7 +761,7 @@ ggplot(df_long, aes(x = 1, y = Valore)) +
 
 ```
 
-From the boxplot above, we observe that some variables are more prone to outliers than others. This is particularly evident in variables such as *black*, *crime*, and *rm*, compared to variables like *age*, *indus*, *nox*, and *tax*, which seem to exhibit fewer atypical behaviors.
+From the boxplot above, we observe that some variables are more prone to outliers than others. This is particularly evident in variables such as *black*, *crime*, and *rm*, compared to variables like *age*, *indus*, *nox*, and *tax*, which seem to exhibit fewer atypical behaviours.
 
 We now consider the standardized data, so that all variables share the same scale, allowing for a single comparable visualization.
 ```{r} 
@@ -811,10 +809,10 @@ Outliers
 ```
 
 As we see from the above output, the three most extreme univariate outliers are all in the *crim* variable. 
-This naturally raises the question of the behavior of crime. 
+This naturally raises the question of the behaviour  of crime. 
 To investigate further, we create a QQ plot to assess whether the crime variable can be approximated by a normal distribution.
 We compute the empirical quantiles and compare them with the theoretical quantiles of the normal distribution.
-For the data to be normally distributed, the points should closely follow the red line, which would indicate a good approximation to the normal distribution.
+For the data to be normally distributed, the points should follow closely the red line, which would indicate a good approximation to the normal distribution.
 
 ```{r}
 scaled_crim = X_scaled$crim
@@ -845,7 +843,7 @@ ggplot(qq_data, aes(x = theoretical, y = sample)) +
 
 We can observe from the plot that the distribution of *crim* does not follow a perfectly normal pattern. 
 In particular, the previously identified outliers stand out significantly.
-So we can conclude saying that the variable *crim* has the three most univariate outliers indicating that the crime rate distribution has extremly high values for some neighborhoods.
+So we can conclude saying that the variable *crim* has the three most univariate outliers indicating that the crime rate distribution has extremely high values for some neighbourhoods.
 
 
 \vspace{0.1in}
@@ -930,7 +928,7 @@ ggplot(df_long, aes(x = Variabile, y = Valore)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")  
 ```
 
-In the above figure we colored in red the values (for each variables) of the three observations which correspond to the univariate outliers found before.
+In the above figure we coloured in red the values (for each variables) of the three observations which correspond to the univariate outliers found before.
 
 As we can see, the values of those observations in the variables which are not *crim* are almost always near the corresponding boxes (which represents the range 1-3 quartile) and therefore not so extreme.
 
@@ -964,7 +962,7 @@ Perform a principal component analysis on the standardized variables. Decide how
 
 
 With the following code we perform the PCA on our standardized dataset. 
-Furthermore we also print, for each principal component, it's own standard deviation, proportion and cumulative proportion of explained variability.
+Furthermore we also print, for each principal component, its own standard deviation, proportion and cumulative proportion of explained variability.
 ```{r}
 pca = prcomp(X, center = T, scale. = T)
 summary(pca)
@@ -972,7 +970,7 @@ summary(pca)
 
 To decide how many components to retain there is not a precise criteria, but there exist some "rules of thumb" which may help in the decision process.
 
-One method consist in taking the components which (together) explains the $70-80\%$ of the total variability of the data. As we can see from the third row of the summary of our PCA, the first 3 components explains (more or less) the 73% of the total variability of the original data and therefore they seem enough to achieve a satisfactory lower-dimensional representation. We could also take the first 4 components, which in total would explain the 80% of the total variability, in order to have an even more accurate representation, but in this way we would loose the possibility to visualize graphically the results of the PCA.
+One method consist in taking the components which (together) explains the $70-80\%$ of the total variability of the data. As we can see from the third row of the summary of our PCA, the first 3 components explains (more or less) the 73% of the total variability of the original data and therefore they seem enough to achieve a satisfactory lower-dimensional representation. We could also take the first 4 components, which in total would explain the 80% of the total variability, in order to have an even more accurate representation, but in this way we would lose the possibility to visualize graphically the results of the PCA.
 
 The second method consists in the construction of the so-called "screeplot", which would indicate the number of components to retain in correspondence of the "elbow".
 ```{r}
@@ -980,7 +978,7 @@ fviz_eig(pca, xlab = "PC", ylab = "% of explained variance")+
   geom_vline(xintercept = 2, linetype = "dashed", color = "red")
 ```
 
-As we can see from the above figure, this second method would advise us to retain just the first two components, since the "elbow" appears in corrispondence of the second eigenvalue.
+As we can see from the above figure, this second method would advise us to retain just the first two components, since the "elbow" appears in correspondence of the second eigenvalue.
 On the other hand, since the first two explain only the 63% of the total variability, we still think it would be better to retain the first three components.
 
 
@@ -992,7 +990,7 @@ pca$sdev^2
 
 As we can see, the eigenvalues of the first three PC are all $\geq 1$ (the third one is almost equal to one) so this method tells us to retain the first three PC for a good lower-dimensional representation.
 
-In conclusion, considering all the three method, it would be advisable to chose the first three components, that strike a balance between a good reduction of dimensional while still explaining a great amount of variability.
+In conclusion, considering all the three method, it would be advisable to choose the first three components, that strike a balance between a good reduction of dimensional while still explaining a great amount of variability.
 
 ## Point 6
 \vspace{0.1in}
@@ -1014,8 +1012,8 @@ As we can see, there is only one variable (ptratio) whose explained variability 
 
 As we can see from the table, the first PC has a high correlation (in module greater than 0.4) with all the 10 original variables (it is not so strange since it explains alone more than the 50% of the total variability of our data). 
 
-A pratical interpretation of the first principal component is that the PC1 is a general quality indicator (the lower the better) of the considered housing. 
-In particular, an observation with a high PC1 score generally indicates an industrial area, leading to significant pollution levels. Additionally, such areas are subject to high property tax burdens, consist predominantly of old buildings, and are characterized by elevated crime rates. The population primarily comprises low-income residents, and the neighborhood often suffers from a shortage of qualified teachers. 
+A practical interpretation of the first principal component is that the PC1 is a general quality indicator (the lower the better) of the considered housing. 
+In particular, an observation with a high PC1 score generally indicates an industrial area, leading to significant pollution levels. Additionally, such areas are subject to high property tax burdens, consist predominantly of old buildings, and are characterized by elevated crime rates. The population primarily comprises low-income residents, and the neighbourhood often suffers from a shortage of qualified teachers. 
 These areas are also typically far from major employment districts, have low presence of black communities and are characterized by smaller housing units.
 
 \vspace{0.1in}
