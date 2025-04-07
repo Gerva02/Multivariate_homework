@@ -173,14 +173,14 @@ now we calculate :
 -\pi_{1}   \\
 \vdots  \\
  -\pi _{p} 
-\end{pmatrix} 
+\end{pmatrix} \\
  & = 1 + \begin{pmatrix}
 1  &  1  & \dots & 1
 \end{pmatrix}\begin{pmatrix}
 -\pi_{1}   \\
 \vdots  \\
  -\pi _{p} 
-\end{pmatrix} =  \\
+\end{pmatrix}   \\
  & =1- (\pi _{1}+\dots+\pi _{p})\neq0 \Leftrightarrow \pi _{1}+\dots+\pi _{p}\neq^{(2)} 1
 \end{align*}
 
@@ -291,7 +291,7 @@ so by definition of eigenvalues and eigenvectors we can say that the eigenvalue 
 
 Let $A\in \mathbb{R}^{n\times n}$ be real and symmetric. Then
 
-1. The eigenvalues of $A$ are real .
+1. The eigenvalues of $A$ are real.
 
 2. $A$ is diagonalizable.
 
@@ -301,20 +301,19 @@ In short, $A$ may be orthonormally diagonalized: $A=VDV^{T}$ where $V\in \mathbb
 
 So by the **Spectral Theorem** we can say that $\exists Q\in \mathbb{R}^{p\times p}$ orthonormal matrix such that $A=QDQ^{T}$ where $D=\begin{pmatrix}p & 0 & \dots & 0 \\ 0 & 0 & \dots  & 0 \\ \vdots&  & \ddots  & \vdots \\ 0 & 0 &\dots & 0\end{pmatrix}$ .
 
-Now we find the eigenvalue of $\Sigma=\pi_{0}(I_{p}-\pi_{0}A)$;
-we recover $A$ with $QDQ^{T}$:
+Now we find the eigenvalue of $\Sigma=\pi_{0}(I_{p}-\pi_{0}A)$ with $A=QDQ^{T}$:
 
 \begin{align*}
 \Sigma & =\pi_{0}(I_{p}-\pi_{0}QDQ^{T}) \\
- & = \pi_{0}(QI_{p}Q^{T}-\pi_{0}QDQ^{T})  \\
- & = \pi_{0}Q(I_{p}-\pi_{0}D )Q^{T} 
+ & = \pi_{0}(QI_{p}Q^{T}-Q\pi_{0}DQ^{T})  \\
+ & = \pi_{0}Q\underbrace{ (I_{p}-\pi_{0}D ) }_{ =: T }Q^{T}
 \end{align*}
 
 **Definition Similar Matrix**
 
-A matrix $A$ is said similar to $B\iff \exists P$ invertible such that $A=P^{-1}BP$ .
+A matrix $A$ is said similar to $B\iff \exists Q$ invertible such that $A=Q^{-1}BQ$ .
 
-From this definition and by how we wrote $\Sigma$ we can say that the matrices $\Sigma$ and $T:=\pi_{0}(I_{p}-\pi_{0}D)$ are similar so we can proceed by finding the eigenvalues of $T$ (since two similar matrices share the same eigenvalues).
+From this definition and by how we wrote $\Sigma$, since $Q$ is an orthonormal matrix ($Q^T=Q^{-1}$), we can say that the matrices $\Sigma$ and $T$ are similar so we can proceed by finding the eigenvalues of $T$ (since two similar matrices share the same eigenvalues).
 
 
 \begin{align*}
@@ -354,7 +353,7 @@ Var(X)  & = (1-\pi_{0}p)\pi_{0} + \pi_{0}(p-1) = \\
 \end{align*}
 
 
-And using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion less than 20%
+Using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion less than 20%
 
 \begin{align*}
  & \frac{\tilde{\lambda}_{p}}{Var(X)} <\frac{1}{5} \\
@@ -371,13 +370,13 @@ And using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion
 (3) The denominator is always greater than 0.
 
 
-We want to eliminate the dependence on $\pi_0$ in the previous inequality, so as to find a lower bound for p. To do so, we consider the worst case scenario in which the first $p-1$ principal components contribute as little as possible to the total explained variance, thus forcing the last principal component to assume the greatest value possible (i.e. when $\pi_{0}\to {0}$). Mathematically we can prove it by showing the function $f(\pi_{0})= \frac{\pi_{0}(1-p\pi_{0})}{\pi_{0}p(1-\pi_{0})}$ is decreasing in its domain $\left( 0, \frac{1}{p} \right)$
+We want to eliminate the dependence on $\pi_0$ in the previous inequality, so as to find a lower bound for p. To do so, we consider the worst case scenario in which the first $p-1$ principal components contribute as little as possible to the total explained variance, thus forcing the last principal component to assume the greatest value possible (i.e. when $\pi_{0}\to {0}$). We can prove it by showing the function $f(\pi_{0})= \frac{\pi_{0}(1-p\pi_{0})}{\pi_{0}p(1-\pi_{0})}$ is decreasing in its domain $\left( 0, \frac{1}{p} \right)$
 
-\begin{align}
+\begin{align*}
 f'(\pi_{0}) & = \frac{-p(p(1-\pi_{0}))-(1-\pi_{0}\pi)(-p)}{(p(1-\pi_{0}) )^{2}} \\
  & =\dots \\
  & =\frac{(1-p)}{p(1-\pi_{0})^{2}} <0 \iff p  >1
-\end{align}
+\end{align*}
 
 
 
@@ -388,7 +387,7 @@ p > \frac{5}{4\pi_{0}+1} \underset{\pi_{0}\to_{0}}{\rightarrow} 5
 $$
 
 ## Point 4
-Perform a simulation study with $p = 3$, $\pi_0 = 1/4$ and $N = 1000$ Monte Carlo samples of $n = 100$ multinomially distributed $Y_i$. For $X = (X_1, X_2, X_3)$, make a scatterplot of the $N$ values of $X_2$ vs $X_1$ and sketch the ellipse corresponding to the contour of the (theoretical limiting) bivariate density of $(X_1, X_2)$ which contains 95\% probability.
+*Perform a simulation study with $p = 3$, $\pi_0 = 1/4$ and $N = 1000$ Monte Carlo samples of $n = 100$ multinomially distributed $Y_i$. For $X = (X_1, X_2, X_3)$, make a scatterplot of the $N$ values of $X_2$ vs $X_1$ and sketch the ellipse corresponding to the contour of the (theoretical limiting) bivariate density of $(X_1, X_2)$ which contains 95\% probability.*
 
 ```{r echo=FALSE , results='hide', message=FALSE, warning=FALSE}
 rm(list = ls())
@@ -498,7 +497,7 @@ arrows(x[1,3],x[2,3],x[1,4],x[2,4],code=2,col="deepskyblue",lwd=3)
 
 
 ## Point 5
-Find the conditional distributions of $(X_1, X_2) \mid X_3 = x_3$ and of $X_3 \mid (X_1 = x_1, X_2 = x_2)$.
+*Find the conditional distributions of $(X_1, X_2) \mid X_3 = x_3$ and of $X_3 \mid (X_1 = x_1, X_2 = x_2)$.*
 
 Given a Gaussian random vector we know that conditioning on it the conditioned vector is still Gaussian with parameters : 
 \begin{align*}
@@ -693,7 +692,8 @@ Let's start by analyzing the variables presented here:
 
 \vspace{0.3cm}
 ## Point 1
-Compute the correlation matrix R and comment on the largest 4 correlations.
+
+*Compute the correlation matrix R and comment on the largest 4 correlations.*
 
 With the following code we plot the correlation matrix of our dataset.
 ```{r}
@@ -739,7 +739,7 @@ Finally, a correlation is observed between the *age* of buildings and their dist
 
 \vspace{0.1in}
 ## Point 2
-Identify the 3 most extreme univariate outliers.
+*Identify the 3 most extreme univariate outliers.*
 
 First, we present a boxplot to visualize the distribution of each variable and identify potential outliers. The variables are plotted on their original scales, without standardization, to allow for first  look of their individual behaviour, since they naturally operate on different scales.
 ```{r} 
@@ -749,7 +749,7 @@ df_long <- X %>%
                values_to = "Valore")
 
 ggplot(df_long, aes(x = 1, y = Valore)) +
-  geom_boxplot(fill = "lightblue", color = "darkblue", 
+  geom_boxplot(fill = "lightgreen", color = "blue", 
                outlier.colour = "black", outlier.shape = 16, outlier.size = 0.8) +
   facet_wrap(~ Variabile, scales = "free_y", ncol = 5, nrow = 2) +
   labs(title= "Box Plot of All Variables", y = "Values", x="") +
@@ -770,7 +770,7 @@ df_long <- X_scaled %>%
   pivot_longer(cols = everything(), names_to = "Variabile", values_to = "Valore")
 
 ggplot(df_long, aes(x = Variabile, y = Valore)) +
-  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.colour = "black", 
+  geom_boxplot(fill = "lightgreen", color = "blue", outlier.colour = "black", 
                outlier.shape = 16, outlier.size = 0.8) +
   coord_cartesian(ylim = c(-5, max(df_long$Valore))) +  
   labs(title = "Boxplot of Standardized Variables", x="",  y = "Values") +
@@ -848,7 +848,7 @@ So we can conclude saying that the variable *crim* has the three most univariate
 
 \vspace{0.1in}
 ## Point 3
-Construct a chi-square Q-Q plot of the squared Mahalanobis distances and comment about normality.
+*Construct a chi-square Q-Q plot of the squared Mahalanobis distances and comment about normality.*
 
 Mahalanobis distance measures how "unusual" a point is compared to a group of data, considering not only its distance from the mean but also how the variables are distributed and correlated with each other.
 With the following code, we construct the chi-square Q-Q plot of the squared Mahalanobis distances of our data. 
@@ -906,7 +906,7 @@ extreme_obs
 
 \vspace{0.1in}
 ## Point 4
-Are the univariate outliers identified in point 2. also multivariate outliers? Justify your answer.
+*Are the univariate outliers identified in point 2. also multivariate outliers? Justify your answer.*
 
 In order to verify if the observations corresponding to the univariate outliers found in point 2 are also multivariate outliers, let's first visualize them in the boxplot figure presented before.
 ```{r}
@@ -918,7 +918,7 @@ d = df_long %>%
   filter(Riga == Outliers[1,2] | Riga == Outliers[2,2] | Riga == Outliers[3,2] )
 
 ggplot(df_long, aes(x = Variabile, y = Valore)) +
-  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.colour = "black",
+  geom_boxplot(fill = "lightgreen", color = "blue", outlier.colour = "black",
                outlier.shape = 16, outlier.size = 0.5) +  
   geom_point(data = d, aes(x = Variabile, y = Valore), 
              color = "red", size = 1) +
@@ -958,7 +958,7 @@ As we can see, the outliers that we found before are also clearly multivariate o
 \vspace{0.1in}
 ## Point 5
 
-Perform a principal component analysis on the standardized variables. Decide how many components to retain in order to achieve a satisfactory lower-dimensional representation of the data. Justify your answer.
+*Perform a principal component analysis on the standardized variables. Decide how many components to retain in order to achieve a satisfactory lower-dimensional representation of the data. Justify your answer.*
 
 
 With the following code we perform the PCA on our standardized dataset. 
@@ -994,7 +994,7 @@ In conclusion, considering all the three method, it would be advisable to choose
 
 ## Point 6
 \vspace{0.1in}
-Interpret the first 3 principal components by selecting for each principal component the variables with correlation greater (in absolute value) than 0.4 with that principal component.
+*Interpret the first 3 principal components by selecting for each principal component the variables with correlation greater (in absolute value) than 0.4 with that principal component.*
 
 In order to interpret properly the first 3 PC we have to look at their correlations with our original variables. 
 ```{r}
@@ -1046,7 +1046,7 @@ df_long <- X %>%
                values_to = "Valore")
 
 ggplot(df_long, aes(x = Variabile, y = Valore)) +
-  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.colour = "black", 
+  geom_boxplot(fill = "lightgreen", color = "blue", outlier.colour = "black", 
                outlier.shape = 16, outlier.size = 0.8) +
   coord_cartesian(ylim = c(-5, max(df_long$Valore))) +  
   labs(title = "Boxplot of PCs", x="",  y = "Values") +
@@ -1057,7 +1057,7 @@ ggplot(df_long, aes(x = Variabile, y = Valore)) +
 
 \vspace{0.1in}
 ## Point 7
-Describe the 3 outliers identified in point 2. in terms of the first 3 principal components.
+*Describe the 3 outliers identified in point 2. in terms of the first 3 principal components.*
 
 To describe the three outliers identified in point (2) in terms of the first 3 PC we first look at the standardized values of those outliers for our original variables. 
 ```{r}
@@ -1078,13 +1078,22 @@ This suggests that the areas represented by the three outliers found before are 
 PC2 is fairly average and from this we can deduce that such areas have average quality schooling and average quality home.
 
 Regarding PC3 we know that all of the three observations are also univariate outliers for PC3 .
-
 ```{r}
-X[,3] %>%
+```
+
+```{r, fig.width=4, fig.height=3}
+tibble(X[,3]) %>%
   ggplot(aes(y = PC3)) +
-  geom_boxplot(fill = "lightblue", color = "darkblue", 
+  geom_boxplot(fill = "lightgreen", color = "blue", 
                outlier.colour = "black", outlier.shape = 16, outlier.size = 0.8) +
-  theme_minimal()
+  theme_minimal()+
+   geom_point(
+    data = tibble(pca_scores[Outliers[,2], 1:3])[,3],
+    aes(y = PC3),
+    x = 0,
+    color= "red",
+    size = 2
+  )
 ```
 
 This is due to the fact that they are also an univariate outlier in the variable crime and the variable black doesn't compensate for it, so we know for certain that these areas aren't extremely diverse.
@@ -1112,9 +1121,10 @@ plot_ly(data = pca_scores, x = ~PC1, y = ~PC2, z = ~PC3,
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\linewidth]{screen.png}
-    \caption*{3D PCA Plot with Outliers Highlighted}
+    \includegraphics[width=0.7\linewidth]{screen2.png}
 \end{figure}
+
+Through the figure, we can observe that the three points appear to be multivariate outliers, as they are significantly distant from the main cluster of observations. The majority of the data points are concentrated in a distinct region of the plot, indicating a clear separation between the outliers and the central mass of the distribution. 
 
 
 
