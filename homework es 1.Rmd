@@ -749,7 +749,7 @@ df_long <- X %>%
                values_to = "Valore")
 
 ggplot(df_long, aes(x = 1, y = Valore)) +
-  geom_boxplot(fill = "lightgreen", color = "blue", 
+  geom_boxplot(fill = "lightsteelblue1", color = "royalblue3", 
                outlier.colour = "black", outlier.shape = 16, outlier.size = 0.8) +
   facet_wrap(~ Variabile, scales = "free_y", ncol = 5, nrow = 2) +
   labs(title= "Box Plot of All Variables", y = "Values", x="") +
@@ -770,7 +770,8 @@ df_long <- X_scaled %>%
   pivot_longer(cols = everything(), names_to = "Variabile", values_to = "Valore")
 
 ggplot(df_long, aes(x = Variabile, y = Valore)) +
-  geom_boxplot(fill = "lightgreen", color = "blue", outlier.colour = "black", 
+  geom_boxplot(fill = "lightsteelblue1", color = "royalblue3", 
+               outlier.colour = "black", 
                outlier.shape = 16, outlier.size = 0.8) +
   coord_cartesian(ylim = c(-5, max(df_long$Valore))) +  
   labs(title = "Boxplot of Standardized Variables", x="",  y = "Values") +
@@ -918,7 +919,8 @@ d = df_long %>%
   filter(Riga == Outliers[1,2] | Riga == Outliers[2,2] | Riga == Outliers[3,2] )
 
 ggplot(df_long, aes(x = Variabile, y = Valore)) +
-  geom_boxplot(fill = "lightgreen", color = "blue", outlier.colour = "black",
+  geom_boxplot( fill = "lightsteelblue1", color = "royalblue3",
+                outlier.colour = "black",
                outlier.shape = 16, outlier.size = 0.5) +  
   geom_point(data = d, aes(x = Variabile, y = Valore), 
              color = "red", size = 1) +
@@ -1046,7 +1048,8 @@ df_long <- X %>%
                values_to = "Valore")
 
 ggplot(df_long, aes(x = Variabile, y = Valore)) +
-  geom_boxplot(fill = "lightgreen", color = "blue", outlier.colour = "black", 
+  geom_boxplot(fill = "lightsteelblue1", color = "royalblue3", 
+               outlier.colour = "black", 
                outlier.shape = 16, outlier.size = 0.8) +
   coord_cartesian(ylim = c(-5, max(df_long$Valore))) +  
   labs(title = "Boxplot of PCs", x="",  y = "Values") +
@@ -1084,8 +1087,9 @@ Regarding PC3 we know that all of the three observations are also univariate out
 ```{r, fig.width=4, fig.height=3}
 tibble(X[,3]) %>%
   ggplot(aes(y = PC3)) +
-  geom_boxplot(fill = "lightgreen", color = "blue", 
-               outlier.colour = "black", outlier.shape = 16, outlier.size = 0.8) +
+  geom_boxplot(fill = "lightsteelblue1", color = "royalblue3", 
+               outlier.colour = "black", outlier.shape = 16, 
+               outlier.size = 0.8) +
   theme_minimal()+
    geom_point(
     data = tibble(pca_scores[Outliers[,2], 1:3])[,3],
