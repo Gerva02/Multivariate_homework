@@ -75,7 +75,7 @@ Where the covariance matrix is:
 \right)
 \end{align*}
 
-If we take the first p components of a Gaussian vector of  dimension p+1 , it is still a Gaussian vector of dimension p in fact:
+If we take the first p components of a Gaussian vector of dimension p+1, it is still a Gaussian vector of dimension p in fact:
 $$
 (X_{1},\dots,X_{p+1})\sim \mathcal{N}_{p+1}(0,\Omega)
 $$
@@ -83,7 +83,7 @@ $$
 * The new mean vector $\underline{0}_{p}$ is the vector of dimension $p<p+1$.
 
 * The element $\Omega _{p+1,p+1}=\underbrace{ \pi _{p+1} }_{ >0 }\underbrace{ (1-\pi _{p+1}) }_{  >^{(1)}\ 0}>0$
-(1) $1-\pi _{p+1}> 0\iff \pi _{p+1}<1$ and this is always true because $\pi _{p+1}$ is a probability that is defined $(0,1)$ .
+(1) $1-\pi _{p+1}> 0\iff \pi _{p+1}<1$ and this is always true because $\pi _{p+1}$ is a probability that is defined in $(0,1)$ .
 
 So we can say that the marginal distribution of the Gaussian vector of dimension p is still a Gaussian:
 $$
@@ -120,7 +120,7 @@ Since evaluating the determinant is not quite easy, we find a **Lemma** that giv
   
 **Sherman Morrison Formula**:
 
-Suppose $A\in \mathbb{R}^{n\times n}$ invertible and $u,v \in \mathbb{R}$ are column vectors. $A + uv^T$ is invertible $\iff 1+v^TAu\neq 0$. In this case:
+Suppose $A\in \mathbb{R}^{n\times n}$ invertible and $u,v \in \mathbb{R}$ are column vectors. $A + uv^T$ is invertible $\iff 1+v^TA^{-1}u\neq 0$. In this case:
 
 \begin{equation}\label{Sherman Morrison Formula}
 (A+uv^T) = A^{-1} - \frac{A^{-1}uv^TA^{-1}}{1+v^TA^{-1}u}. 
@@ -342,8 +342,7 @@ $$
   1>(1-\pi_{0}p) \iff
  \pi_{0}p>0 \quad\forall p>0 
 $$
-So we have that the smallest eigenvalue $\tilde{\lambda}_{p}=\pi_{0}(1-\pi_{0}p)$. 
-
+So we have that the smallest eigenvalue $\tilde{\lambda}_{p}=\pi_{0}(1-\pi_{0}p)$ (since by convention the eigenvalues are ordered in a decreasing way). 
 Now we find the total variance as the sum of the eigenvalues of $\Sigma$:
 
 \begin{align*}
@@ -361,7 +360,7 @@ Using the formula $\frac{\tilde{\lambda}_{p}}{Var(X)}$ we set the proportion les
  & \frac{(1-\pi_{0}p)}{p(1-\pi_{0})}-\frac{1}{5}<0 \\
  & \frac{5\pi(1-\pi_{0}p)-\pi_{0}p(1-\pi_{0})}{5\pi_{0}p(1-\pi)}<0  \\
  & \frac{5\pi_{0}-5\pi_{0}^{2}p-\pi_{0}p+\pi_{0}^{2}p}{5\pi_{0}p(1-\pi_{0})}<0 \\
- & \frac{-\pi_{0}^{2}-\pi_{0}p+5\pi_{0}}{5\pi_{0}p(1-\pi_{0})}< ^{3} 0 \\
+ & \frac{-\pi_{0}^{2}-\pi_{0}p+5\pi_{0}}{5\pi_{0}p(1-\pi_{0})}< ^{(3)} 0 \\
 & \frac{{ \pi_{0} }p(-4\pi_{0}-1)+5\pi_{0}}{5{ \pi_{0} }p(1-\pi_{0})}<0 \\
  & p(-4\pi_{0}-1 )+5< 0  \\
  & p> \frac{5}{4\pi_{0}+1}
@@ -375,12 +374,10 @@ We want to eliminate the dependence on $\pi_0$ in the previous inequality, so as
 \begin{align*}
 f'(\pi_{0}) & = \frac{-p(p(1-\pi_{0}))-(1-\pi_{0}\pi)(-p)}{(p(1-\pi_{0}) )^{2}} \\
  & =\dots \\
- & =\frac{(1-p)}{p(1-\pi_{0})^{2}} <0 \iff p  >1
+ & =\frac{(1-p)}{p(1-\pi_{0})^{2}} <0 \iff p  >1  \wedge \forall \pi_0 \in \left( 0, \frac{1}{p} \right)
 \end{align*}
 
-
-
-In that limiting case, we obtain a simple lower bound that no longer depends on $\pi_{0}$.
+Hence, if we want to ensure the proportion of explained variance falls below 20% a simple lower bound for p is:
 
 $$
 p > \frac{5}{4\pi_{0}+1} \underset{\pi_{0}\to_{0}}{\rightarrow} 5
@@ -401,8 +398,8 @@ library(latex2exp)
 library(ellipse)
 ```
 
-We firstly initialize the variables such that they are coherent with the text, then we sample from a uniform discrete random variable (since each outcome is equally likely with probability $\pi_{0}=\frac{1}{4}$ ). After we codify $Y_{i}$ with one-hot random vectors.($Y_{i}\sim \text{Multinomial}\left( 1, \frac{1}{4}, \frac{1}{4},\frac{1}{4},\frac{1}{4} \right)$).
-Once we sample $n=100$ $Y_{i}$, we sum the columns to get the random variable which is distributed as a $\sum_{i=1}^{100}Y_{i}\sim \text{Multinomial}\left( 100, \frac{1}{4}, \frac{1}{4},\frac{1}{4},\frac{1}{4} \right)$, we repeat this process $N=1000$ and we apply the CLT on this $1000$ sample to get the random vector $\sqrt{ n }(\hat{\pi}-\pi)\sim \mathcal{N}_{4}(\underline{0},\text{diag}(\pi)-\pi \pi^{T})$. 
+We firstly initialize the variables such that they are coherent with the text, then we sample from a uniform discrete random variable (since each outcome is equally likely with probability $\pi_{0}=\frac{1}{4}$ ). After we codify $Y_{i}$ with one-hot random vectors ($Y_{i}\sim \text{Multinomial}\left( 1, \frac{1}{4}, \frac{1}{4},\frac{1}{4},\frac{1}{4} \right)$).
+Once we sample $n=100$ $Y_{i}$, we sum the columns to get the random variable which is distributed as  $\sum_{i=1}^{100}Y_{i}\sim \text{Multinomial}\left( 100, \frac{1}{4}, \frac{1}{4},\frac{1}{4},\frac{1}{4} \right)$, we repeat this process $N=1000$ and we apply the CLT on this $1000$ sample to get the random vector $\sqrt{ n }(\hat{\pi}-\pi)\sim \mathcal{N}_{4}(\underline{0},\text{diag}(\pi)-\pi \pi^{T})$. 
 
 ```{r}
 #We set seed to standardize result
